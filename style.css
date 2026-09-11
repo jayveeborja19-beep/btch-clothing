@@ -539,4 +539,25 @@ header nav a:hover {
     font-size: 11px;
   }
 
+}.contact-details {
+  margin-top: 35px;
+}
+
+.contact-details p {
+  margin-bottom: 28px;
+}
+
+.contact-details strong {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.contact-details a {
+  color: white;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.contact-details a:hover {
+  opacity: 0.6;
 }
