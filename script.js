@@ -1,6 +1,6 @@
 const SHOPIFY_DOMAIN = "btch-clothing.myshopify.com";
 
-// Paste your PUBLIC Storefront API token between the quotes
+// PUBLIC Storefront API token
 const SHOPIFY_TOKEN = "d8463ddfb6962692451d57928255c2ee";
 
 const SHOPIFY_API_VERSION = "2026-07";
@@ -9,6 +9,35 @@ const endpoint =
   `https://${SHOPIFY_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 
 let cart = [];
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function setupNavigation() {
+  const navLinks = document.querySelectorAll("header nav a");
+
+  navLinks.forEach(link => {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      const targetId = this.getAttribute("href");
+
+      if (!targetId || targetId === "#") return;
+
+      const target = document.querySelector(targetId);
+
+      if (target) {
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      }
+    });
+  });
+}
+
 
 /* =========================
    SHOPIFY PRODUCTS
@@ -23,15 +52,18 @@ async function loadShopifyProducts() {
             id
             title
             description
+
             featuredImage {
               url
               altText
             }
+
             variants(first: 1) {
               edges {
                 node {
                   id
                   title
+
                   price {
                     amount
                     currencyCode
@@ -48,11 +80,15 @@ async function loadShopifyProducts() {
   try {
     const response = await fetch(endpoint, {
       method: "POST",
+
       headers: {
         "Content-Type": "application/json",
         "X-Shopify-Storefront-Access-Token": SHOPIFY_TOKEN
       },
-      body: JSON.stringify({ query })
+
+      body: JSON.stringify({
+        query
+      })
     });
 
     const data = await response.json();
@@ -62,50 +98,78 @@ async function loadShopifyProducts() {
       return;
     }
 
-    const products = data.data.products.edges.map(edge => edge.node);
+    const products =
+      data.data.products.edges.map(edge => edge.node);
 
     displayProducts(products);
 
   } catch (error) {
-    console.error("Could not connect to Shopify:", error);
+    console.error(
+      "Could not connect to Shopify:",
+      error
+    );
   }
 }
+
 
 /* =========================
    DISPLAY PRODUCTS
 ========================= */
 
 function displayProducts(products) {
-  const grid = document.querySelector(".products-grid");
+
+  const grid =
+    document.querySelector(".products-grid");
 
   if (!grid) return;
 
   grid.innerHTML = "";
 
   products.forEach(product => {
-    const variant = product.variants.edges[0]?.node;
+
+    const variant =
+      product.variants.edges[0]?.node;
 
     if (!variant) return;
 
-    const price = Number(variant.price.amount).toLocaleString("en-PH", {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2
-    });
+    const price =
+      Number(variant.price.amount).toLocaleString(
+        "en-PH",
+        {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2
+        }
+      );
 
-    const image = product.featuredImage
-      ? product.featuredImage.url
-      : "";
+    const image =
+      product.featuredImage
+        ? product.featuredImage.url
+        : "";
 
-    const card = document.createElement("div");
+    const card =
+      document.createElement("div");
+
     card.className = "product-card";
 
     card.innerHTML = `
       <div class="product-image">
+
         ${
           image
-            ? `<img src="${image}" alt="${product.featuredImage.altText || product.title}">`
-            : `<div>No image</div>`
+            ? `
+              <img
+                src="${image}"
+                alt="${
+                  product.featuredImage.altText ||
+                  product.title
+                }"
+              >
+            `
+            : `
+              <div>No image</div>
+            `
         }
+
       </div>
 
       <h3>${product.title}</h3>
@@ -129,28 +193,44 @@ function displayProducts(products) {
   attachCartButtons();
 }
 
+
 /* =========================
    ADD TO CART
 ========================= */
 
 function attachCartButtons() {
-  const buttons = document.querySelectorAll(".add-to-cart");
+
+  const buttons =
+    document.querySelectorAll(".add-to-cart");
 
   buttons.forEach(button => {
+
     button.addEventListener("click", () => {
 
-      const variantId = button.dataset.variantId;
-      const title = button.dataset.title;
-      const price = Number(button.dataset.price);
-      const image = button.dataset.image;
+      const variantId =
+        button.dataset.variantId;
 
-      const existingItem = cart.find(
-        item => item.variantId === variantId
-      );
+      const title =
+        button.dataset.title;
+
+      const price =
+        Number(button.dataset.price);
+
+      const image =
+        button.dataset.image;
+
+      const existingItem =
+        cart.find(
+          item =>
+            item.variantId === variantId
+        );
 
       if (existingItem) {
+
         existingItem.quantity++;
+
       } else {
+
         cart.push({
           variantId,
           title,
@@ -162,64 +242,94 @@ function attachCartButtons() {
 
       updateCart();
 
-      button.textContent = "ADDED ✓";
+      button.textContent =
+        "ADDED ✓";
 
       setTimeout(() => {
-        button.textContent = "ADD TO CART";
+
+        button.textContent =
+          "ADD TO CART";
+
       }, 1000);
+
     });
+
   });
 }
+
 
 /* =========================
    CART
 ========================= */
 
 function updateCart() {
-  let cartButton = document.querySelector(".cart-button");
+
+  let cartButton =
+    document.querySelector(".cart-button");
 
   if (!cartButton) {
+
     createCartButton();
-    cartButton = document.querySelector(".cart-button");
+
+    cartButton =
+      document.querySelector(".cart-button");
   }
 
-  const totalItems = cart.reduce(
-    (total, item) => total + item.quantity,
-    0
-  );
+  const totalItems =
+    cart.reduce(
+      (total, item) =>
+        total + item.quantity,
+      0
+    );
 
-  cartButton.textContent = `CART (${totalItems})`;
+  cartButton.textContent =
+    `CART (${totalItems})`;
 }
+
 
 /* =========================
    CART BUTTON
 ========================= */
 
 function createCartButton() {
-  const header = document.querySelector("header");
+
+  const header =
+    document.querySelector("header");
 
   if (!header) return;
 
-  const cartButton = document.createElement("button");
+  const cartButton =
+    document.createElement("button");
 
-  cartButton.className = "cart-button";
-  cartButton.textContent = "CART (0)";
+  cartButton.className =
+    "cart-button";
 
-  cartButton.addEventListener("click", showCart);
+  cartButton.textContent =
+    "CART (0)";
+
+  cartButton.addEventListener(
+    "click",
+    showCart
+  );
 
   header.appendChild(cartButton);
 }
+
 
 /* =========================
    SHOW CART
 ========================= */
 
 function showCart() {
+
   let cartHTML = `
     <div class="cart-overlay">
+
       <div class="cart-box">
 
-        <button class="close-cart">✕</button>
+        <button class="close-cart">
+          ✕
+        </button>
 
         <h2>YOUR CART</h2>
   `;
@@ -234,7 +344,8 @@ function showCart() {
 
     cart.forEach((item, index) => {
 
-      const itemTotal = item.price * item.quantity;
+      const itemTotal =
+        item.price * item.quantity;
 
       cartHTML += `
         <div class="cart-item">
@@ -246,19 +357,29 @@ function showCart() {
 
           <div class="cart-item-info">
 
-            <h3>${item.title}</h3>
+            <h3>
+              ${item.title}
+            </h3>
 
-            <p>₱${item.price.toLocaleString("en-PH")}</p>
+            <p>
+              ₱${item.price.toLocaleString("en-PH")}
+            </p>
 
             <div class="quantity-controls">
 
-              <button onclick="changeQuantity(${index}, -1)">
+              <button
+                onclick="changeQuantity(${index}, -1)"
+              >
                 −
               </button>
 
-              <span>${item.quantity}</span>
+              <span>
+                ${item.quantity}
+              </span>
 
-              <button onclick="changeQuantity(${index}, 1)">
+              <button
+                onclick="changeQuantity(${index}, 1)"
+              >
                 +
               </button>
 
@@ -281,10 +402,13 @@ function showCart() {
       `;
     });
 
-    const cartTotal = cart.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
+    const cartTotal =
+      cart.reduce(
+        (total, item) =>
+          total +
+          item.price * item.quantity,
+        0
+      );
 
     cartHTML += `
       <div class="cart-total">
@@ -307,48 +431,75 @@ function showCart() {
     </div>
   `;
 
-  document.body.insertAdjacentHTML("beforeend", cartHTML);
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    cartHTML
+  );
 
   document
     .querySelector(".close-cart")
-    .addEventListener("click", closeCart);
+    .addEventListener(
+      "click",
+      closeCart
+    );
 
   const checkoutButton =
-    document.querySelector(".checkout-button");
+    document.querySelector(
+      ".checkout-button"
+    );
 
   if (checkoutButton) {
-    checkoutButton.addEventListener("click", checkout);
+
+    checkoutButton.addEventListener(
+      "click",
+      checkout
+    );
   }
 }
+
 
 /* =========================
    CLOSE CART
 ========================= */
 
 function closeCart() {
-  const overlay = document.querySelector(".cart-overlay");
+
+  const overlay =
+    document.querySelector(
+      ".cart-overlay"
+    );
 
   if (overlay) {
     overlay.remove();
   }
 }
 
+
 /* =========================
    CHANGE QUANTITY
 ========================= */
 
-function changeQuantity(index, amount) {
+function changeQuantity(
+  index,
+  amount
+) {
 
   cart[index].quantity += amount;
 
-  if (cart[index].quantity <= 0) {
+  if (
+    cart[index].quantity <= 0
+  ) {
+
     cart.splice(index, 1);
   }
 
   closeCart();
+
   updateCart();
+
   showCart();
 }
+
 
 /* =========================
    REMOVE ITEM
@@ -359,32 +510,45 @@ function removeFromCart(index) {
   cart.splice(index, 1);
 
   closeCart();
+
   updateCart();
+
   showCart();
 }
+
 
 /* =========================
    CHECKOUT
 ========================= */
 
 async function checkout() {
+
   if (cart.length === 0) {
+
     alert("Your cart is empty.");
+
     return;
   }
 
-  const lines = cart.map(item => ({
-    merchandiseId: item.variantId,
-    quantity: item.quantity
-  }));
+  const lines =
+    cart.map(item => ({
+      merchandiseId:
+        item.variantId,
+
+      quantity:
+        item.quantity
+    }));
 
   const mutation = `
     mutation CartCreate($input: CartInput) {
+
       cartCreate(input: $input) {
+
         cart {
           id
           checkoutUrl
         }
+
         userErrors {
           field
           message
@@ -394,52 +558,96 @@ async function checkout() {
   `;
 
   try {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Shopify-Storefront-Access-Token": SHOPIFY_TOKEN
-      },
-      body: JSON.stringify({
-        query: mutation,
-        variables: {
-          input: {
-            lines: lines
+
+    const response =
+      await fetch(endpoint, {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json",
+
+          "X-Shopify-Storefront-Access-Token":
+            SHOPIFY_TOKEN
+        },
+
+        body: JSON.stringify({
+
+          query: mutation,
+
+          variables: {
+            input: {
+              lines: lines
+            }
           }
-        }
-      })
-    });
 
-    const data = await response.json();
+        })
+      });
 
-    console.log("Checkout response:", data);
+    const data =
+      await response.json();
 
-    const result = data.data?.cartCreate;
+    console.log(
+      "Checkout response:",
+      data
+    );
+
+    const result =
+      data.data?.cartCreate;
 
     if (!result) {
+
       console.error(data);
-      alert("Something went wrong creating your checkout.");
+
+      alert(
+        "Something went wrong creating your checkout."
+      );
+
       return;
     }
 
-    if (result.userErrors.length > 0) {
-      console.error(result.userErrors);
-      alert(result.userErrors[0].message);
+    if (
+      result.userErrors.length > 0
+    ) {
+
+      console.error(
+        result.userErrors
+      );
+
+      alert(
+        result.userErrors[0].message
+      );
+
       return;
     }
 
-    if (result.cart?.checkoutUrl) {
-      window.location.href = result.cart.checkoutUrl;
+    if (
+      result.cart?.checkoutUrl
+    ) {
+
+      window.location.href =
+        result.cart.checkoutUrl;
     }
 
   } catch (error) {
-    console.error("Checkout error:", error);
-    alert("Could not connect to Shopify checkout.");
+
+    console.error(
+      "Checkout error:",
+      error
+    );
+
+    alert(
+      "Could not connect to Shopify checkout."
+    );
   }
 }
+
 
 /* =========================
    START
 ========================= */
+
+setupNavigation();
 
 loadShopifyProducts();
