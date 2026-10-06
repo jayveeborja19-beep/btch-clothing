@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>BTCH Clothing — Philippine Streetwear</title>
 
@@ -17,40 +20,126 @@
     content="BTCH Clothing, Philippine streetwear, streetwear Philippines, BTCH"
   >
 
-  <meta name="author" content="BTCH Clothing">
+  <meta
+    name="author"
+    content="BTCH Clothing"
+  >
 
   <!-- Social Preview -->
-  <meta property="og:title" content="BTCH Clothing — Philippine Streetwear">
+  <meta
+    property="og:title"
+    content="BTCH Clothing — Philippine Streetwear"
+  >
 
   <meta
     property="og:description"
     content="Streetwear made from Philippines."
   >
 
-  <meta property="og:image" content="logo2.png.png">
+  <meta
+    property="og:image"
+    content="logo2.png.png"
+  >
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="logo2.png.png">
+  <link
+    rel="icon"
+    type="image/png"
+    href="logo2.png.png"
+  >
 
   <!-- CSS -->
-  <link rel="stylesheet" href="style.css">
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 </head>
 
 <body>
+
 
   <!-- ================= HEADER ================= -->
 
   <header>
 
+    <!-- BTCH LOGO -->
+
     <a href="#" class="logo">
-      <img src="logo2.png.png" alt="BTCH Clothing">
+
+      <img
+        src="logo2.png.png"
+        alt="BTCH Clothing"
+      >
+
     </a>
 
+
+    <!-- NAVIGATION -->
+
     <nav>
-      <a href="#products">SHOP</a>
-      <a href="#about">ABOUT</a>
-      <a href="#contact">CONTACT</a>
+
+      <a href="#products">
+        SHOP
+      </a>
+
+      <a href="#about">
+        ABOUT
+      </a>
+
+      <a href="#contact">
+        CONTACT
+      </a>
+
     </nav>
+
+
+    <!-- ================= CART ICON ================= -->
+
+    <button
+      class="cart-button"
+      type="button"
+      aria-label="Open cart"
+    >
+
+      <svg
+        class="cart-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+
+        <path
+          d="M3 4H5L7.2 15.2C7.4 16.2 8.3 17 9.4 17H18.2C19.2 17 20.1 16.3 20.4 15.4L22 9H6"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+
+        <circle
+          cx="9.5"
+          cy="20"
+          r="1.2"
+          fill="currentColor"
+        />
+
+        <circle
+          cx="18"
+          cy="20"
+          r="1.2"
+          fill="currentColor"
+        />
+
+      </svg>
+
+
+      <!-- NUMBER OF ITEMS -->
+
+      <span class="cart-count">
+        0
+      </span>
+
+    </button>
 
   </header>
 
@@ -63,11 +152,18 @@
 
     <div class="hero-content">
 
-      <h1>DONT TRUST ANYONE.</h1>
+      <h1>
+        DONT TRUST ANYONE.
+      </h1>
 
-      <p>STREETWEAR MADE FROM PHILIPPINES.</p>
+      <p>
+        STREETWEAR MADE FROM PHILIPPINES.
+      </p>
 
-      <a href="#products" class="hero-shop-button">
+      <a
+        href="#products"
+        class="hero-shop-button"
+      >
         SHOP COLLECTION
       </a>
 
@@ -78,7 +174,10 @@
 
   <!-- ================= SHOP ================= -->
 
-  <section id="products" class="shop-section">
+  <section
+    id="products"
+    class="shop-section"
+  >
 
     <div class="section-header">
 
@@ -96,6 +195,7 @@
     <!-- ================= PRODUCTS ================= -->
 
     <div class="products-grid">
+
 
       <!-- PRODUCT 1 -->
 
@@ -230,7 +330,10 @@
 
   <!-- ================= ABOUT ================= -->
 
-  <section id="about" class="about-section">
+  <section
+    id="about"
+    class="about-section"
+  >
 
     <div class="about-content">
 
@@ -263,7 +366,10 @@
 
   <!-- ================= CONTACT ================= -->
 
-  <section id="contact" class="contact-section">
+  <section
+    id="contact"
+    class="contact-section"
+  >
 
     <div class="contact-content">
 
@@ -356,9 +462,15 @@
 
   <!-- ================= CART ================= -->
 
-  <div id="cart-overlay" class="cart-overlay">
+  <div
+    id="cart-overlay"
+    class="cart-overlay"
+  >
 
     <div class="cart-container">
+
+
+      <!-- CART HEADER -->
 
       <div class="cart-header">
 
@@ -366,17 +478,27 @@
           YOUR CART
         </h2>
 
-        <button id="close-cart">
+        <button
+          id="close-cart"
+          type="button"
+          aria-label="Close cart"
+        >
           ×
         </button>
 
       </div>
 
 
+      <!-- CART ITEMS -->
+
       <div id="cart-items">
+
         <!-- Cart items appear here -->
+
       </div>
 
+
+      <!-- CART FOOTER -->
 
       <div class="cart-footer">
 
@@ -393,7 +515,10 @@
         </div>
 
 
-        <button id="checkout-button">
+        <button
+          id="checkout-button"
+          type="button"
+        >
           CHECKOUT
         </button>
 

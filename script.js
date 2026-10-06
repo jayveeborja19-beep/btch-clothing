@@ -213,17 +213,73 @@ function updateCart() {
 }
 
 function createCartButton() {
+  const header = document.querySelector("header");
+
+  if (!header) return;
+
   let button = document.querySelector(".cart-button");
+
+  /*
+    The cart button already exists in index.html.
+    If it doesn't exist for some reason, create it.
+  */
 
   if (!button) {
     button = document.createElement("button");
+
+    button.type = "button";
     button.className = "cart-button";
-    button.innerHTML = `CART <span class="cart-count">0</span>`;
+    button.setAttribute("aria-label", "Open cart");
 
-    document.body.appendChild(button);
+    button.innerHTML = `
+      <svg
+        class="cart-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3 4H5L7.2 15.2C7.4 16.2 8.3 17 9.4 17H18.2C19.2 17 20.1 16.3 20.4 15.4L22 9H6"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
 
-    button.addEventListener("click", showCart);
+        <circle
+          cx="9.5"
+          cy="20"
+          r="1.2"
+          fill="currentColor"
+        />
+
+        <circle
+          cx="18"
+          cy="20"
+          r="1.2"
+          fill="currentColor"
+        />
+      </svg>
+
+      <span class="cart-count">0</span>
+    `;
+
+    header.appendChild(button);
   }
+
+  /*
+    Make sure the button opens the cart.
+    The data attribute prevents duplicate click listeners.
+  */
+
+  if (!button.dataset.cartListener) {
+    button.addEventListener("click", showCart);
+    button.dataset.cartListener = "true";
+  }
+
+  /*
+    Update the number shown on the cart icon.
+  */
 
   const countElement = button.querySelector(".cart-count");
 
@@ -234,6 +290,8 @@ function createCartButton() {
 
   if (countElement) {
     countElement.textContent = count;
+  }
+}
   }
 }
 
