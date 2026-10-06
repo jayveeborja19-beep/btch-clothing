@@ -1,9 +1,6 @@
 /* =====================================================
-
    BTCH CLOTHING
-
    CLEAN WHITE / BLACK STREETWEAR
-
 ===================================================== */
 
 
@@ -17,11 +14,13 @@
   padding: 0;
 }
 
+
 html {
   width: 100%;
   scroll-behavior: smooth;
   scroll-padding-top: 90px;
 }
+
 
 body {
   width: 100%;
@@ -63,6 +62,7 @@ header {
   text-decoration: none;
 }
 
+
 .logo img {
   width: 150px;
   height: auto;
@@ -82,6 +82,7 @@ header nav {
   z-index: 10001;
 }
 
+
 header nav a {
   color: #111111;
   text-decoration: none;
@@ -90,6 +91,7 @@ header nav a {
   letter-spacing: 1px;
   transition: opacity 0.2s ease;
 }
+
 
 header nav a:hover {
   opacity: 0.5;
@@ -112,12 +114,12 @@ header nav a:hover {
 
   /*
      FULL-WIDTH HERO
-     The image is moved HIGHER inside the hero.
+     Keep hero image positioning unchanged.
   */
 
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center -400px;
+  background-position: center -300px;
   background-color: #111111;
 
   color: #ffffff;
@@ -183,6 +185,7 @@ header nav a:hover {
     transform 0.2s ease;
 }
 
+
 .hero-shop-button:hover {
   background: #111111;
   color: #ffffff;
@@ -198,9 +201,12 @@ header nav a:hover {
   width: 100%;
   max-width: 1500px;
   margin: 0 auto;
+
   padding: 115px 45px 130px;
-  background: #ffffff;
-  color: #111111;
+
+  /* BLACK PRODUCT SECTION */
+  background: #000000;
+  color: #ffffff;
 }
 
 
@@ -211,19 +217,21 @@ header nav a:hover {
   margin-bottom: 70px;
 }
 
+
 .section-label {
   margin-bottom: 15px;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 5px;
-  color: #999999;
+  color: #888888;
 }
+
 
 .shop-section h2 {
   font-size: 30px;
   font-weight: 800;
   letter-spacing: 3px;
-  color: #111111;
+  color: #ffffff;
 }
 
 
@@ -242,8 +250,10 @@ header nav a:hover {
 
 .product-card {
   text-align: left;
-  background: #ffffff;
-  color: #111111;
+
+  /* BLACK CARD */
+  background: #000000;
+  color: #ffffff;
 }
 
 
@@ -252,10 +262,16 @@ header nav a:hover {
 .product-image {
   width: 100%;
   aspect-ratio: 3 / 4;
-  background: #ffffff;
+
+  /* BLACK IMAGE AREA */
+  background: #000000;
+
   overflow: hidden;
   position: relative;
 }
+
+
+/* PRODUCT IMAGES */
 
 .product-image img {
   width: 100%;
@@ -276,7 +292,8 @@ header nav a:hover {
   aspect-ratio: 3 / 4;
   display: block;
   object-fit: contain;
-  background: #ffffff;
+
+  background: #000000;
 
   transition:
     transform 0.4s ease,
@@ -293,6 +310,48 @@ header nav a:hover {
 }
 
 
+/* =====================================================
+   DICE FRONT / BACK
+===================================================== */
+
+.dice-product .dice-front,
+.dice-product .dice-back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+  transition:
+    opacity 0.35s ease,
+    transform 0.4s ease;
+}
+
+
+.dice-product .dice-front {
+  opacity: 1;
+  z-index: 2;
+}
+
+
+.dice-product .dice-back {
+  opacity: 0;
+  z-index: 1;
+}
+
+
+/* SHOW BACK WHEN HOVERING */
+
+.dice-product:hover .dice-front {
+  opacity: 0;
+}
+
+
+.dice-product:hover .dice-back {
+  opacity: 1;
+}
+
+
 /* PRODUCT NAME */
 
 .product-card h3 {
@@ -301,7 +360,9 @@ header nav a:hover {
   line-height: 1.4;
   letter-spacing: 1px;
   font-weight: 600;
-  color: #222222;
+
+  /* WHITE */
+  color: #ffffff;
 }
 
 
@@ -311,7 +372,9 @@ header nav a:hover {
   margin-top: 6px;
   font-size: 13px;
   font-weight: 600;
-  color: #777777;
+
+  /* WHITE */
+  color: #ffffff;
 }
 
 
@@ -328,10 +391,12 @@ header nav a:hover {
   border-top: 1px solid #eeeeee;
 }
 
+
 .about-content {
   max-width: 780px;
   margin: 0 auto;
 }
+
 
 .about-section h2 {
   margin-bottom: 35px;
@@ -341,12 +406,14 @@ header nav a:hover {
   color: #111111;
 }
 
+
 .about-section p:not(.section-label):not(.about-tagline) {
   margin-bottom: 18px;
   font-size: 15px;
   line-height: 1.9;
   color: #666666;
 }
+
 
 .about-tagline {
   margin-top: 45px;
@@ -370,10 +437,12 @@ header nav a:hover {
   border-top: 1px solid #eeeeee;
 }
 
+
 .contact-content {
   max-width: 850px;
   margin: 0 auto;
 }
+
 
 .contact-section h2 {
   margin-bottom: 35px;
@@ -395,12 +464,14 @@ header nav a:hover {
   flex-wrap: wrap;
 }
 
+
 .contact-links a {
   color: #555555;
   text-decoration: none;
   font-size: 14px;
   transition: color 0.2s ease;
 }
+
 
 .contact-links a:hover {
   color: #000000;
@@ -419,6 +490,7 @@ header nav a:hover {
   display: none;
   justify-content: flex-end;
 }
+
 
 .cart-overlay.active {
   display: flex;
@@ -449,10 +521,12 @@ header nav a:hover {
   margin-bottom: 30px;
 }
 
+
 .cart-header h2 {
   font-size: 24px;
   letter-spacing: 2px;
 }
+
 
 #close-cart {
   border: none;
@@ -474,6 +548,7 @@ header nav a:hover {
   border-bottom: 1px solid #dddddd;
 }
 
+
 .cart-item img {
   width: 80px !important;
   height: 100px !important;
@@ -481,14 +556,17 @@ header nav a:hover {
   flex-shrink: 0;
 }
 
+
 .cart-item-info {
   flex: 1;
 }
+
 
 .cart-item-info h3 {
   font-size: 13px;
   margin-bottom: 8px;
 }
+
 
 .cart-item-info p {
   font-size: 13px;
@@ -504,6 +582,7 @@ header nav a:hover {
   gap: 12px;
   margin-bottom: 8px;
 }
+
 
 .quantity-controls button {
   width: 28px;
@@ -541,10 +620,12 @@ header nav a:hover {
   margin-bottom: 20px;
 }
 
+
 .cart-total span {
   font-size: 12px;
   letter-spacing: 2px;
 }
+
 
 .cart-total strong {
   font-size: 18px;
@@ -563,6 +644,7 @@ header nav a:hover {
   cursor: pointer;
   letter-spacing: 1px;
 }
+
 
 #checkout-button:hover {
   opacity: 0.8;
@@ -589,6 +671,7 @@ footer {
   margin-bottom: 40px;
 }
 
+
 .footer-logo img {
   width: 190px;
   max-width: 70%;
@@ -608,6 +691,7 @@ footer {
   gap: 30px;
 }
 
+
 .footer-links a {
   color: #777777;
   text-decoration: none;
@@ -615,6 +699,7 @@ footer {
   letter-spacing: 1.2px;
   transition: color 0.2s ease;
 }
+
 
 .footer-links a:hover {
   color: #111111;
@@ -663,6 +748,7 @@ footer {
     height: 45px;
   }
 
+
   .logo img {
     width: 100px;
     max-height: 45px;
@@ -674,6 +760,7 @@ footer {
   header nav {
     gap: 18px;
   }
+
 
   header nav a {
     font-size: 10px;
@@ -688,14 +775,16 @@ footer {
 
     background-size: cover;
 
-    /* MOVED HERO IMAGE HIGHER */
-    background-size: 180% auto; background-position: center top;
+    /* KEEP HERO POSITION */
+    background-position: center -220px;
   }
+
 
   .hero h1 {
     font-size: 3rem;
     line-height: 1.05;
   }
+
 
   .hero p {
     font-size: 10px;
@@ -707,15 +796,30 @@ footer {
 
   .shop-section {
     padding: 90px 25px 100px;
+    background: #000000;
   }
+
 
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 45px 18px;
   }
 
+
   .shop-section h2 {
     font-size: 26px;
+  }
+
+
+  /* PRODUCT TEXT */
+
+  .product-card h3 {
+    font-size: 11px;
+  }
+
+
+  .product-card p {
+    font-size: 12px;
   }
 
 
@@ -724,6 +828,7 @@ footer {
   .about-section {
     padding: 90px 25px;
   }
+
 
   .about-section h2 {
     font-size: 32px;
@@ -736,9 +841,11 @@ footer {
     padding: 90px 25px;
   }
 
+
   .contact-section h2 {
     font-size: 32px;
   }
+
 
   .contact-links {
     flex-direction: column;
@@ -773,6 +880,7 @@ footer {
     height: 38px;
   }
 
+
   .logo img {
     width: 80px;
     max-height: 38px;
@@ -784,6 +892,7 @@ footer {
   header nav {
     gap: 10px;
   }
+
 
   header nav a {
     font-size: 9px;
@@ -799,17 +908,20 @@ footer {
 
     background-size: cover;
 
-    /* MOVED HERO IMAGE HIGHER */
-    background-size: 180% auto; background-position: center top;
+    /* KEEP HERO POSITION */
+    background-position: center -180px;
   }
+
 
   .hero h1 {
     font-size: 2rem;
   }
 
+
   .hero p {
     font-size: 9px;
   }
+
 
   .hero-shop-button {
     padding: 13px 24px;
@@ -820,13 +932,27 @@ footer {
   /* PRODUCTS */
 
   .products-grid {
-    grid-template-columns: 1fr;
-    gap: 50px;
+    /* TWO PRODUCTS PER ROW ON PHONES */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 14px;
   }
 
+
   .shop-section {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background: #000000;
+  }
+
+
+  .product-card h3 {
+    font-size: 9px;
+    letter-spacing: 0.6px;
+  }
+
+
+  .product-card p {
+    font-size: 11px;
   }
 
 
@@ -835,6 +961,7 @@ footer {
   footer {
     padding: 65px 20px 35px;
   }
+
 
   .footer-links {
     flex-direction: column;
