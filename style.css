@@ -117,7 +117,7 @@ header nav a:hover {
 
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center -300px;
+  background-position: center -350px;
   background-color: #111111;
 
   color: #ffffff;
@@ -689,7 +689,7 @@ footer {
     background-size: cover;
 
     /* MOVED HERO IMAGE HIGHER */
-    background-position: center -220px;
+    background-size: 180% auto; background-position: center top;
   }
 
   .hero h1 {
@@ -800,7 +800,7 @@ footer {
     background-size: cover;
 
     /* MOVED HERO IMAGE HIGHER */
-    background-position: center -180px;
+    background-size: 180% auto; background-position: center top;
   }
 
   .hero h1 {
