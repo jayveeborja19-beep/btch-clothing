@@ -3,7 +3,6 @@
    CLEAN WHITE / BLACK STREETWEAR
 ===================================================== */
 
-
 /* =========================
    RESET
 ========================= */
@@ -14,22 +13,19 @@
   padding: 0;
 }
 
-
 html {
   width: 100%;
   scroll-behavior: smooth;
   scroll-padding-top: 90px;
 }
 
-
 body {
   width: 100%;
   overflow-x: hidden;
-  background: #ffffff;
+  background: #000000;
   color: #111111;
   font-family: Arial, Helvetica, sans-serif;
 }
-
 
 /* =====================================================
    HEADER
@@ -51,7 +47,6 @@ header {
   backdrop-filter: blur(8px);
 }
 
-
 /* LOGO */
 
 .logo {
@@ -62,7 +57,6 @@ header {
   text-decoration: none;
 }
 
-
 .logo img {
   width: 150px;
   height: auto;
@@ -70,7 +64,6 @@ header {
   display: block;
   object-fit: contain;
 }
-
 
 /* NAVIGATION */
 
@@ -82,7 +75,6 @@ header nav {
   z-index: 10001;
 }
 
-
 header nav a {
   color: #111111;
   text-decoration: none;
@@ -92,11 +84,9 @@ header nav a {
   transition: opacity 0.2s ease;
 }
 
-
 header nav a:hover {
   opacity: 0.5;
 }
-
 
 /* =====================================================
    HERO
@@ -119,12 +109,11 @@ header nav a:hover {
 
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center -300px;
+  background-position: center -400px;
   background-color: #111111;
 
   color: #ffffff;
 }
-
 
 /* HERO OVERLAY */
 
@@ -136,7 +125,6 @@ header nav a:hover {
   pointer-events: none;
 }
 
-
 /* HERO CONTENT */
 
 .hero-content {
@@ -144,7 +132,6 @@ header nav a:hover {
   z-index: 2;
   max-width: 950px;
 }
-
 
 /* HERO TITLE */
 
@@ -156,7 +143,6 @@ header nav a:hover {
   color: #ffffff;
 }
 
-
 /* HERO DESCRIPTION */
 
 .hero p {
@@ -165,7 +151,6 @@ header nav a:hover {
   letter-spacing: 0.18em;
   color: #eeeeee;
 }
-
 
 /* HERO BUTTON */
 
@@ -185,13 +170,11 @@ header nav a:hover {
     transform 0.2s ease;
 }
 
-
 .hero-shop-button:hover {
   background: #111111;
   color: #ffffff;
   transform: translateY(-2px);
 }
-
 
 /* =====================================================
    SHOP
@@ -199,8 +182,8 @@ header nav a:hover {
 
 .shop-section {
   width: 100%;
-  max-width: 1500px;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
 
   padding: 115px 45px 130px;
 
@@ -209,14 +192,12 @@ header nav a:hover {
   color: #ffffff;
 }
 
-
 /* SECTION HEADER */
 
 .section-header {
   text-align: center;
   margin-bottom: 70px;
 }
-
 
 .section-label {
   margin-bottom: 15px;
@@ -226,14 +207,12 @@ header nav a:hover {
   color: #888888;
 }
 
-
 .shop-section h2 {
   font-size: 30px;
   font-weight: 800;
   letter-spacing: 3px;
   color: #ffffff;
 }
-
 
 /* =====================================================
    PRODUCTS
@@ -245,7 +224,6 @@ header nav a:hover {
   gap: 60px 35px;
 }
 
-
 /* PRODUCT CARD */
 
 .product-card {
@@ -255,7 +233,6 @@ header nav a:hover {
   background: #000000;
   color: #ffffff;
 }
-
 
 /* PRODUCT IMAGE WRAPPER */
 
@@ -270,7 +247,6 @@ header nav a:hover {
   position: relative;
 }
 
-
 /* PRODUCT IMAGES */
 
 .product-image img {
@@ -283,7 +259,6 @@ header nav a:hover {
     transform 0.4s ease,
     opacity 0.3s ease;
 }
-
 
 /* DIRECT PRODUCT IMAGE */
 
@@ -300,7 +275,6 @@ header nav a:hover {
     opacity 0.3s ease;
 }
 
-
 /* PRODUCT HOVER */
 
 .product-card:hover .product-image img,
@@ -308,7 +282,6 @@ header nav a:hover {
   transform: scale(1.025);
   opacity: 0.92;
 }
-
 
 /* =====================================================
    DICE FRONT / BACK
@@ -327,18 +300,15 @@ header nav a:hover {
     transform 0.4s ease;
 }
 
-
 .dice-product .dice-front {
   opacity: 1;
   z-index: 2;
 }
 
-
 .dice-product .dice-back {
   opacity: 0;
   z-index: 1;
 }
-
 
 /* SHOW BACK WHEN HOVERING */
 
@@ -346,11 +316,9 @@ header nav a:hover {
   opacity: 0;
 }
 
-
 .dice-product:hover .dice-back {
   opacity: 1;
 }
-
 
 /* PRODUCT NAME */
 
@@ -365,7 +333,6 @@ header nav a:hover {
   color: #ffffff;
 }
 
-
 /* PRICE */
 
 .product-card p {
@@ -376,7 +343,6 @@ header nav a:hover {
   /* WHITE */
   color: #ffffff;
 }
-
 
 /* =====================================================
    ABOUT
@@ -391,12 +357,10 @@ header nav a:hover {
   border-top: 1px solid #eeeeee;
 }
 
-
 .about-content {
   max-width: 780px;
   margin: 0 auto;
 }
-
 
 .about-section h2 {
   margin-bottom: 35px;
@@ -406,14 +370,12 @@ header nav a:hover {
   color: #111111;
 }
 
-
 .about-section p:not(.section-label):not(.about-tagline) {
   margin-bottom: 18px;
   font-size: 15px;
   line-height: 1.9;
   color: #666666;
 }
-
 
 .about-tagline {
   margin-top: 45px;
@@ -422,7 +384,6 @@ header nav a:hover {
   letter-spacing: 5px;
   color: #333333;
 }
-
 
 /* =====================================================
    CONTACT
@@ -437,12 +398,10 @@ header nav a:hover {
   border-top: 1px solid #eeeeee;
 }
 
-
 .contact-content {
   max-width: 850px;
   margin: 0 auto;
 }
-
 
 .contact-section h2 {
   margin-bottom: 35px;
@@ -451,7 +410,6 @@ header nav a:hover {
   letter-spacing: 4px;
   color: #111111;
 }
-
 
 /* CONTACT LINKS */
 
@@ -464,7 +422,6 @@ header nav a:hover {
   flex-wrap: wrap;
 }
 
-
 .contact-links a {
   color: #555555;
   text-decoration: none;
@@ -472,11 +429,9 @@ header nav a:hover {
   transition: color 0.2s ease;
 }
 
-
 .contact-links a:hover {
   color: #000000;
 }
-
 
 /* =====================================================
    CART
@@ -491,11 +446,9 @@ header nav a:hover {
   justify-content: flex-end;
 }
 
-
 .cart-overlay.active {
   display: flex;
 }
-
 
 /* CART CONTAINER */
 
@@ -511,7 +464,6 @@ header nav a:hover {
     -10px 0 30px rgba(0, 0, 0, 0.3);
 }
 
-
 /* CART HEADER */
 
 .cart-header {
@@ -521,12 +473,10 @@ header nav a:hover {
   margin-bottom: 30px;
 }
 
-
 .cart-header h2 {
   font-size: 24px;
   letter-spacing: 2px;
 }
-
 
 #close-cart {
   border: none;
@@ -536,7 +486,6 @@ header nav a:hover {
   cursor: pointer;
   color: #111111;
 }
-
 
 /* CART ITEMS */
 
@@ -548,7 +497,6 @@ header nav a:hover {
   border-bottom: 1px solid #dddddd;
 }
 
-
 .cart-item img {
   width: 80px !important;
   height: 100px !important;
@@ -556,23 +504,19 @@ header nav a:hover {
   flex-shrink: 0;
 }
 
-
 .cart-item-info {
   flex: 1;
 }
-
 
 .cart-item-info h3 {
   font-size: 13px;
   margin-bottom: 8px;
 }
 
-
 .cart-item-info p {
   font-size: 13px;
   margin-bottom: 10px;
 }
-
 
 /* QUANTITY */
 
@@ -583,7 +527,6 @@ header nav a:hover {
   margin-bottom: 8px;
 }
 
-
 .quantity-controls button {
   width: 28px;
   height: 28px;
@@ -591,7 +534,6 @@ header nav a:hover {
   background: #ffffff;
   cursor: pointer;
 }
-
 
 /* REMOVE */
 
@@ -603,13 +545,11 @@ header nav a:hover {
   cursor: pointer;
 }
 
-
 /* CART FOOTER */
 
 .cart-footer {
   margin-top: 30px;
 }
-
 
 /* TOTAL */
 
@@ -620,17 +560,14 @@ header nav a:hover {
   margin-bottom: 20px;
 }
 
-
 .cart-total span {
   font-size: 12px;
   letter-spacing: 2px;
 }
 
-
 .cart-total strong {
   font-size: 18px;
 }
-
 
 /* CHECKOUT */
 
@@ -645,11 +582,9 @@ header nav a:hover {
   letter-spacing: 1px;
 }
 
-
 #checkout-button:hover {
   opacity: 0.8;
 }
-
 
 /* =====================================================
    FOOTER
@@ -664,13 +599,11 @@ footer {
   border-top: 1px solid #eeeeee;
 }
 
-
 /* FOOTER LOGO */
 
 .footer-logo {
   margin-bottom: 40px;
 }
-
 
 .footer-logo img {
   width: 190px;
@@ -681,7 +614,6 @@ footer {
   object-fit: contain;
 }
 
-
 /* FOOTER LINKS */
 
 .footer-links {
@@ -691,7 +623,6 @@ footer {
   gap: 30px;
 }
 
-
 .footer-links a {
   color: #777777;
   text-decoration: none;
@@ -700,11 +631,9 @@ footer {
   transition: color 0.2s ease;
 }
 
-
 .footer-links a:hover {
   color: #111111;
 }
-
 
 /* COPYRIGHT */
 
@@ -714,7 +643,6 @@ footer {
   letter-spacing: 1px;
   color: #aaaaaa;
 }
-
 
 /* =====================================================
    TABLET
@@ -728,7 +656,6 @@ footer {
 
 }
 
-
 /* =====================================================
    MOBILE
 ===================================================== */
@@ -740,7 +667,6 @@ footer {
     padding: 9px 25px;
   }
 
-
   /* HEADER LOGO */
 
   .logo {
@@ -748,12 +674,10 @@ footer {
     height: 45px;
   }
 
-
   .logo img {
     width: 100px;
     max-height: 45px;
   }
-
 
   /* NAV */
 
@@ -761,11 +685,9 @@ footer {
     gap: 18px;
   }
 
-
   header nav a {
     font-size: 10px;
   }
-
 
   /* HERO */
 
@@ -773,24 +695,21 @@ footer {
     min-height: 90vh;
     padding: 130px 30px 80px;
 
-    background-size: cover;
+    background-size: 180% auto;
 
     /* KEEP HERO POSITION */
-    background-position: center -220px;
+    background-position: center top;
   }
-
 
   .hero h1 {
     font-size: 3rem;
     line-height: 1.05;
   }
 
-
   .hero p {
     font-size: 10px;
     letter-spacing: 0.12em;
   }
-
 
   /* SHOP */
 
@@ -799,17 +718,14 @@ footer {
     background: #000000;
   }
 
-
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 45px 18px;
   }
 
-
   .shop-section h2 {
     font-size: 26px;
   }
-
 
   /* PRODUCT TEXT */
 
@@ -817,11 +733,9 @@ footer {
     font-size: 11px;
   }
 
-
   .product-card p {
     font-size: 12px;
   }
-
 
   /* ABOUT */
 
@@ -829,11 +743,9 @@ footer {
     padding: 90px 25px;
   }
 
-
   .about-section h2 {
     font-size: 32px;
   }
-
 
   /* CONTACT */
 
@@ -841,17 +753,14 @@ footer {
     padding: 90px 25px;
   }
 
-
   .contact-section h2 {
     font-size: 32px;
   }
-
 
   .contact-links {
     flex-direction: column;
     gap: 25px;
   }
-
 
   /* FOOTER */
 
@@ -860,7 +769,6 @@ footer {
   }
 
 }
-
 
 /* =====================================================
    SMALL PHONES
@@ -872,7 +780,6 @@ footer {
     padding: 8px 18px;
   }
 
-
   /* HEADER LOGO */
 
   .logo {
@@ -880,12 +787,10 @@ footer {
     height: 38px;
   }
 
-
   .logo img {
     width: 80px;
     max-height: 38px;
   }
-
 
   /* NAV */
 
@@ -893,11 +798,9 @@ footer {
     gap: 10px;
   }
 
-
   header nav a {
     font-size: 9px;
   }
-
 
   /* HERO */
 
@@ -906,28 +809,24 @@ footer {
     padding-right: 20px;
     min-height: 85vh;
 
-    background-size: cover;
+    background-size: 180% auto;
 
     /* KEEP HERO POSITION */
-    background-position: center -180px;
+    background-position: center top;
   }
-
 
   .hero h1 {
     font-size: 2rem;
   }
 
-
   .hero p {
     font-size: 9px;
   }
-
 
   .hero-shop-button {
     padding: 13px 24px;
     font-size: 10px;
   }
-
 
   /* PRODUCTS */
 
@@ -937,24 +836,20 @@ footer {
     gap: 40px 14px;
   }
 
-
   .shop-section {
     padding-left: 15px;
     padding-right: 15px;
     background: #000000;
   }
 
-
   .product-card h3 {
     font-size: 9px;
     letter-spacing: 0.6px;
   }
 
-
   .product-card p {
     font-size: 11px;
   }
-
 
   /* FOOTER */
 
@@ -962,12 +857,10 @@ footer {
     padding: 65px 20px 35px;
   }
 
-
   .footer-links {
     flex-direction: column;
     gap: 18px;
   }
-
 
   /* CART */
 
