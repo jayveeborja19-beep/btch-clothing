@@ -54,25 +54,30 @@ async function loadShopifyProducts() {
           title
           handle
           description
+
           featuredImage {
             url
             altText
           }
+
           images(first: 10) {
             nodes {
               url
               altText
             }
           }
+
           variants(first: 50) {
             nodes {
               id
               title
               availableForSale
+
               price {
                 amount
                 currencyCode
               }
+
               image {
                 url
                 altText
@@ -126,15 +131,15 @@ function renderProducts(items) {
       product.images?.nodes?.[0]?.url ||
       "";
 
-    const price = Number(variant.price.amount).toLocaleString(
-      "en-PH",
-      {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2
-      }
-    );
+    const price = Number(
+      variant.price.amount
+    ).toLocaleString("en-PH", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    });
 
     const card = document.createElement("div");
+
     card.className = "product-card";
 
     card.innerHTML = `
@@ -147,10 +152,12 @@ function renderProducts(items) {
 
       <div class="product-info">
         <h3>${escapeHtml(product.title)}</h3>
+
         <p>₱${price}</p>
 
         <button
           class="add-to-cart"
+          type="button"
           data-variant-id="${escapeHtml(variant.id)}"
           data-product-title="${escapeHtml(product.title)}"
           data-price="${escapeHtml(variant.price.amount)}"
@@ -292,8 +299,10 @@ function createCartButton() {
     countElement.textContent = count;
   }
 }
-  }
-}
+
+/* =========================
+   RENDER CART
+========================= */
 
 function renderCart() {
   const {
@@ -332,6 +341,7 @@ function renderCart() {
     cartTotal += itemTotal;
 
     const cartItem = document.createElement("div");
+
     cartItem.className = "cart-item";
 
     cartItem.innerHTML = `
@@ -353,8 +363,10 @@ function renderCart() {
         </p>
 
         <div class="cart-quantity">
+
           <button
             class="quantity-minus"
+            type="button"
             data-index="${index}"
           >
             −
@@ -364,14 +376,17 @@ function renderCart() {
 
           <button
             class="quantity-plus"
+            type="button"
             data-index="${index}"
           >
             +
           </button>
+
         </div>
 
         <button
           class="remove-item"
+          type="button"
           data-index="${index}"
         >
           REMOVE
@@ -402,22 +417,34 @@ function renderCart() {
 
   document.querySelectorAll(".quantity-minus").forEach(button => {
     button.addEventListener("click", () => {
-      changeQuantity(Number(button.dataset.index), -1);
+      changeQuantity(
+        Number(button.dataset.index),
+        -1
+      );
     });
   });
 
   document.querySelectorAll(".quantity-plus").forEach(button => {
     button.addEventListener("click", () => {
-      changeQuantity(Number(button.dataset.index), 1);
+      changeQuantity(
+        Number(button.dataset.index),
+        1
+      );
     });
   });
 
   document.querySelectorAll(".remove-item").forEach(button => {
     button.addEventListener("click", () => {
-      removeFromCart(Number(button.dataset.index));
+      removeFromCart(
+        Number(button.dataset.index)
+      );
     });
   });
 }
+
+/* =========================
+   CHANGE QUANTITY
+========================= */
 
 function changeQuantity(index, amount) {
   if (!cart[index]) return;
@@ -430,6 +457,10 @@ function changeQuantity(index, amount) {
 
   updateCart();
 }
+
+/* =========================
+   REMOVE FROM CART
+========================= */
 
 function removeFromCart(index) {
   if (!cart[index]) return;
@@ -458,6 +489,10 @@ function showCart() {
 
   document.body.style.overflow = "hidden";
 }
+
+/* =========================
+   CLOSE CART
+========================= */
 
 function closeCart() {
   const { overlay } = getCartElements();
@@ -514,15 +549,21 @@ async function checkout() {
       }
     `;
 
-    const data = await shopifyFetch(mutation, {
-      input: {
-        lines
+    const data = await shopifyFetch(
+      mutation,
+      {
+        input: {
+          lines
+        }
       }
-    });
+    );
 
     const result = data.cartCreate;
 
-    if (result.userErrors && result.userErrors.length > 0) {
+    if (
+      result.userErrors &&
+      result.userErrors.length > 0
+    ) {
       throw new Error(
         result.userErrors
           .map(error => error.message)
@@ -530,20 +571,34 @@ async function checkout() {
       );
     }
 
-    if (result.warnings && result.warnings.length > 0) {
-      console.warn("Shopify warnings:", result.warnings);
+    if (
+      result.warnings &&
+      result.warnings.length > 0
+    ) {
+      console.warn(
+        "Shopify warnings:",
+        result.warnings
+      );
     }
 
-    if (!result.cart || !result.cart.checkoutUrl) {
+    if (
+      !result.cart ||
+      !result.cart.checkoutUrl
+    ) {
       throw new Error(
         "Shopify did not return a checkout URL."
       );
     }
 
-    window.location.assign(result.cart.checkoutUrl);
+    window.location.assign(
+      result.cart.checkoutUrl
+    );
 
   } catch (error) {
-    console.error("Checkout error:", error);
+    console.error(
+      "Checkout error:",
+      error
+    );
 
     alert(
       "CHECKOUT ERROR:\n\n" +
@@ -572,19 +627,28 @@ function setupCart() {
     overlay.hidden = true;
     overlay.style.display = "none";
 
-    overlay.addEventListener("click", event => {
-      if (event.target === overlay) {
-        closeCart();
+    overlay.addEventListener(
+      "click",
+      event => {
+        if (event.target === overlay) {
+          closeCart();
+        }
       }
-    });
+    );
   }
 
   if (closeButton) {
-    closeButton.addEventListener("click", closeCart);
+    closeButton.addEventListener(
+      "click",
+      closeCart
+    );
   }
 
   if (checkoutButton) {
-    checkoutButton.addEventListener("click", checkout);
+    checkoutButton.addEventListener(
+      "click",
+      checkout
+    );
   }
 
   updateCart();
@@ -595,61 +659,75 @@ function setupCart() {
 ========================= */
 
 function setupNavigation() {
-  const shopLinks = document.querySelectorAll(
-    'a[href="#shop"], a[href="#collection"]'
-  );
+  const shopLinks =
+    document.querySelectorAll(
+      'a[href="#shop"], a[href="#collection"]'
+    );
 
   shopLinks.forEach(link => {
-    link.addEventListener("click", event => {
-      const target =
-        document.querySelector("#shop") ||
-        document.querySelector("#collection") ||
-        document.querySelector(".products-section");
+    link.addEventListener(
+      "click",
+      event => {
+        const target =
+          document.querySelector("#shop") ||
+          document.querySelector("#collection") ||
+          document.querySelector(".products-section");
 
-      if (target) {
-        event.preventDefault();
+        if (target) {
+          event.preventDefault();
 
-        target.scrollIntoView({
-          behavior: "smooth"
-        });
+          target.scrollIntoView({
+            behavior: "smooth"
+          });
+        }
       }
-    });
+    );
   });
 
-  const aboutLinks = document.querySelectorAll(
-    'a[href="#about"]'
-  );
+  const aboutLinks =
+    document.querySelectorAll(
+      'a[href="#about"]'
+    );
 
   aboutLinks.forEach(link => {
-    link.addEventListener("click", event => {
-      const target = document.querySelector("#about");
+    link.addEventListener(
+      "click",
+      event => {
+        const target =
+          document.querySelector("#about");
 
-      if (target) {
-        event.preventDefault();
+        if (target) {
+          event.preventDefault();
 
-        target.scrollIntoView({
-          behavior: "smooth"
-        });
+          target.scrollIntoView({
+            behavior: "smooth"
+          });
+        }
       }
-    });
+    );
   });
 
-  const contactLinks = document.querySelectorAll(
-    'a[href="#contact"]'
-  );
+  const contactLinks =
+    document.querySelectorAll(
+      'a[href="#contact"]'
+    );
 
   contactLinks.forEach(link => {
-    link.addEventListener("click", event => {
-      const target = document.querySelector("#contact");
+    link.addEventListener(
+      "click",
+      event => {
+        const target =
+          document.querySelector("#contact");
 
-      if (target) {
-        event.preventDefault();
+        if (target) {
+          event.preventDefault();
 
-        target.scrollIntoView({
-          behavior: "smooth"
-        });
+          target.scrollIntoView({
+            behavior: "smooth"
+          });
+        }
       }
-    });
+    );
   });
 }
 
@@ -670,8 +748,11 @@ function escapeHtml(value) {
    START
 ========================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-  setupNavigation();
-  setupCart();
-  loadShopifyProducts();
-});
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+    setupNavigation();
+    setupCart();
+    loadShopifyProducts();
+  }
+);
