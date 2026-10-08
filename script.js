@@ -75,8 +75,11 @@ async function loadShopifyProducts() {
   const query = `
 
     query {
+
       products(first: 50) {
+
         nodes {
+
           id
           title
           handle
@@ -95,7 +98,9 @@ async function loadShopifyProducts() {
           }
 
           variants(first: 50) {
+
             nodes {
+
               id
               title
               availableForSale
@@ -109,15 +114,21 @@ async function loadShopifyProducts() {
                 url
                 altText
               }
+
             }
+
           }
+
         }
+
       }
+
     }
 
   `;
 
   try {
+
     const data =
       await shopifyFetch(query);
 
@@ -132,10 +143,12 @@ async function loadShopifyProducts() {
     );
 
   } catch (error) {
+
     console.error(
       "Could not load Shopify products:",
       error
     );
+
   }
 }
 
@@ -144,12 +157,14 @@ async function loadShopifyProducts() {
 ===================================================== */
 
 function renderProducts(items) {
+
   const grid =
     document.querySelector(".products-grid") ||
     document.querySelector("#products-grid") ||
     document.querySelector(".product-grid");
 
   if (!grid) {
+
     console.warn(
       "Product grid not found."
     );
@@ -160,6 +175,7 @@ function renderProducts(items) {
   grid.innerHTML = "";
 
   items.forEach(product => {
+
     const variant =
       product.variants &&
       product.variants.nodes &&
@@ -193,13 +209,16 @@ function renderProducts(items) {
     card.innerHTML = `
 
       <div class="product-image">
+
         <img
           src="${escapeHtml(image)}"
           alt="${escapeHtml(product.title)}"
         >
+
       </div>
 
       <div class="product-info">
+
         <h3>
           ${escapeHtml(product.title)}
         </h3>
@@ -218,20 +237,25 @@ function renderProducts(items) {
         >
           ADD TO CART
         </button>
+
       </div>
 
     `;
 
     grid.appendChild(card);
+
   });
 
   document
     .querySelectorAll(".add-to-cart")
     .forEach(button => {
+
       button.addEventListener(
         "click",
         () => {
+
           addToCart({
+
             variantId:
               button.dataset.variantId,
 
@@ -247,10 +271,14 @@ function renderProducts(items) {
               button.dataset.image,
 
             quantity: 1
+
           });
+
         }
       );
+
     });
+
 }
 
 /* =====================================================
@@ -258,7 +286,9 @@ function renderProducts(items) {
 ===================================================== */
 
 function getCartElements() {
+
   return {
+
     overlay:
       document.getElementById(
         "cart-overlay"
@@ -283,7 +313,9 @@ function getCartElements() {
       document.getElementById(
         "close-cart"
       )
+
   };
+
 }
 
 /* =====================================================
@@ -291,6 +323,7 @@ function getCartElements() {
 ===================================================== */
 
 function addToCart(item) {
+
   const existing =
     cart.find(
       product =>
@@ -299,13 +332,19 @@ function addToCart(item) {
     );
 
   if (existing) {
+
     existing.quantity += 1;
+
   } else {
+
     cart.push(item);
+
   }
 
   updateCart();
+
   showCart();
+
 }
 
 /* =====================================================
@@ -313,8 +352,11 @@ function addToCart(item) {
 ===================================================== */
 
 function updateCart() {
+
   createCartButton();
+
   renderCart();
+
 }
 
 /* =====================================================
@@ -322,6 +364,7 @@ function updateCart() {
 ===================================================== */
 
 function createCartButton() {
+
   const header =
     document.querySelector("header");
 
@@ -333,6 +376,7 @@ function createCartButton() {
     );
 
   if (!button) {
+
     button =
       document.createElement(
         "button"
@@ -350,12 +394,14 @@ function createCartButton() {
     );
 
     button.innerHTML = `
+
       <svg
         class="cart-icon"
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
+
         <path
           d="M3 4H5L7.2 15.2C7.4 16.2 8.3 17 9.4 17H18.2C19.2 17 20.1 16.3 20.4 15.4L22 9H6"
           stroke="currentColor"
@@ -377,17 +423,21 @@ function createCartButton() {
           r="1.2"
           fill="currentColor"
         />
+
       </svg>
 
       <span class="cart-count">
         0
       </span>
+
     `;
 
     header.appendChild(button);
+
   }
 
   if (!button.dataset.cartListener) {
+
     button.addEventListener(
       "click",
       showCart
@@ -395,6 +445,7 @@ function createCartButton() {
 
     button.dataset.cartListener =
       "true";
+
   }
 
   const countElement =
@@ -410,9 +461,12 @@ function createCartButton() {
     );
 
   if (countElement) {
+
     countElement.textContent =
       count;
+
   }
+
 }
 
 /* =====================================================
@@ -420,6 +474,7 @@ function createCartButton() {
 ===================================================== */
 
 function renderCart() {
+
   const {
     items,
     total,
@@ -427,33 +482,42 @@ function renderCart() {
   } = getCartElements();
 
   if (!items || !total) {
+
     return;
+
   }
 
   items.innerHTML = "";
 
   if (cart.length === 0) {
+
     items.innerHTML = `
+
       <p class="empty-cart">
         YOUR CART IS EMPTY.
       </p>
+
     `;
 
     total.textContent =
       "₱0";
 
     if (checkoutButton) {
+
       checkoutButton.disabled =
         true;
+
     }
 
     return;
+
   }
 
   let cartTotal = 0;
 
   cart.forEach(
     (item, index) => {
+
       const itemTotal =
         item.price *
         item.quantity;
@@ -470,7 +534,9 @@ function renderCart() {
         "cart-item";
 
       cartItem.innerHTML = `
+
         <div class="cart-item-image">
+
           <img
             src="${escapeHtml(
               item.image || ""
@@ -479,9 +545,11 @@ function renderCart() {
               item.title
             )}"
           >
+
         </div>
 
         <div class="cart-item-info">
+
           <h4>
             ${escapeHtml(
               item.title
@@ -499,6 +567,7 @@ function renderCart() {
           </p>
 
           <div class="cart-quantity">
+
             <button
               class="quantity-minus"
               type="button"
@@ -518,6 +587,7 @@ function renderCart() {
             >
               +
             </button>
+
           </div>
 
           <button
@@ -527,9 +597,11 @@ function renderCart() {
           >
             REMOVE
           </button>
+
         </div>
 
         <div class="cart-item-total">
+
           ₱${itemTotal.toLocaleString(
             "en-PH",
             {
@@ -537,12 +609,15 @@ function renderCart() {
               maximumFractionDigits: 2
             }
           )}
+
         </div>
+
       `;
 
       items.appendChild(
         cartItem
       );
+
     }
   );
 
@@ -557,8 +632,10 @@ function renderCart() {
     );
 
   if (checkoutButton) {
+
     checkoutButton.disabled =
       false;
+
   }
 
   document
@@ -566,17 +643,21 @@ function renderCart() {
       ".quantity-minus"
     )
     .forEach(button => {
+
       button.addEventListener(
         "click",
         () => {
+
           changeQuantity(
             Number(
               button.dataset.index
             ),
             -1
           );
+
         }
       );
+
     });
 
   document
@@ -584,17 +665,21 @@ function renderCart() {
       ".quantity-plus"
     )
     .forEach(button => {
+
       button.addEventListener(
         "click",
         () => {
+
           changeQuantity(
             Number(
               button.dataset.index
             ),
             1
           );
+
         }
       );
+
     });
 
   document
@@ -602,17 +687,22 @@ function renderCart() {
       ".remove-item"
     )
     .forEach(button => {
+
       button.addEventListener(
         "click",
         () => {
+
           removeFromCart(
             Number(
               button.dataset.index
             )
           );
+
         }
       );
+
     });
+
 }
 
 /* =====================================================
@@ -623,6 +713,7 @@ function changeQuantity(
   index,
   amount
 ) {
+
   if (!cart[index])
     return;
 
@@ -633,13 +724,16 @@ function changeQuantity(
     cart[index].quantity <=
     0
   ) {
+
     cart.splice(
       index,
       1
     );
+
   }
 
   updateCart();
+
 }
 
 /* =====================================================
@@ -647,6 +741,7 @@ function changeQuantity(
 ===================================================== */
 
 function removeFromCart(index) {
+
   if (!cart[index])
     return;
 
@@ -656,6 +751,7 @@ function removeFromCart(index) {
   );
 
   updateCart();
+
 }
 
 /* =====================================================
@@ -663,16 +759,19 @@ function removeFromCart(index) {
 ===================================================== */
 
 function showCart() {
+
   const {
     overlay
   } = getCartElements();
 
   if (!overlay) {
+
     console.error(
       "Cart overlay not found."
     );
 
     return;
+
   }
 
   renderCart();
@@ -685,6 +784,7 @@ function showCart() {
 
   document.body.style.overflow =
     "hidden";
+
 }
 
 /* =====================================================
@@ -692,6 +792,7 @@ function showCart() {
 ===================================================== */
 
 function closeCart() {
+
   const {
     overlay
   } = getCartElements();
@@ -707,6 +808,7 @@ function closeCart() {
 
   document.body.style.overflow =
     "";
+
 }
 
 /* =====================================================
@@ -714,12 +816,15 @@ function closeCart() {
 ===================================================== */
 
 async function checkout() {
+
   if (cart.length === 0) {
+
     alert(
       "Your cart is empty."
     );
 
     return;
+
   }
 
   const {
@@ -727,17 +832,21 @@ async function checkout() {
   } = getCartElements();
 
   if (checkoutButton) {
+
     checkoutButton.disabled =
       true;
 
     checkoutButton.textContent =
       "CONNECTING...";
+
   }
 
   try {
+
     const lines =
       cart.map(
         item => ({
+
           merchandiseId:
             item.variantId,
 
@@ -745,6 +854,7 @@ async function checkout() {
             Number(
               item.quantity
             )
+
         })
       );
 
@@ -759,20 +869,28 @@ async function checkout() {
         ) {
 
           cart {
+
             id
             checkoutUrl
+
           }
 
           userErrors {
+
             field
             message
+
           }
 
           warnings {
+
             code
             message
+
           }
+
         }
+
       }
 
     `;
@@ -794,6 +912,7 @@ async function checkout() {
       result.userErrors &&
       result.userErrors.length > 0
     ) {
+
       throw new Error(
         result.userErrors
           .map(
@@ -802,25 +921,30 @@ async function checkout() {
           )
           .join("\n")
       );
+
     }
 
     if (
       result.warnings &&
       result.warnings.length > 0
     ) {
+
       console.warn(
         "Shopify warnings:",
         result.warnings
       );
+
     }
 
     if (
       !result.cart ||
       !result.cart.checkoutUrl
     ) {
+
       throw new Error(
         "Shopify did not return a checkout URL."
       );
+
     }
 
     window.location.assign(
@@ -828,6 +952,7 @@ async function checkout() {
     );
 
   } catch (error) {
+
     console.error(
       "Checkout error:",
       error
@@ -839,13 +964,17 @@ async function checkout() {
     );
 
     if (checkoutButton) {
+
       checkoutButton.disabled =
         false;
 
       checkoutButton.textContent =
         "CHECKOUT";
+
     }
+
   }
+
 }
 
 /* =====================================================
@@ -853,6 +982,7 @@ async function checkout() {
 ===================================================== */
 
 function setupCart() {
+
   const {
     overlay,
     closeButton,
@@ -860,6 +990,7 @@ function setupCart() {
   } = getCartElements();
 
   if (overlay) {
+
     overlay.hidden =
       true;
 
@@ -869,31 +1000,41 @@ function setupCart() {
     overlay.addEventListener(
       "click",
       event => {
+
         if (
           event.target ===
           overlay
         ) {
+
           closeCart();
+
         }
+
       }
     );
+
   }
 
   if (closeButton) {
+
     closeButton.addEventListener(
       "click",
       closeCart
     );
+
   }
 
   if (checkoutButton) {
+
     checkoutButton.addEventListener(
       "click",
       checkout
     );
+
   }
 
   updateCart();
+
 }
 
 /* =====================================================
@@ -901,6 +1042,7 @@ function setupCart() {
 ===================================================== */
 
 function setupNavigation() {
+
   const shopLinks =
     document.querySelectorAll(
       'a[href="#shop"], a[href="#collection"]'
@@ -908,9 +1050,11 @@ function setupNavigation() {
 
   shopLinks.forEach(
     link => {
+
       link.addEventListener(
         "click",
         event => {
+
           const target =
             document.querySelector(
               "#shop"
@@ -923,15 +1067,19 @@ function setupNavigation() {
             );
 
           if (target) {
+
             event.preventDefault();
 
             target.scrollIntoView({
               behavior:
                 "smooth"
             });
+
           }
+
         }
       );
+
     }
   );
 
@@ -942,24 +1090,30 @@ function setupNavigation() {
 
   aboutLinks.forEach(
     link => {
+
       link.addEventListener(
         "click",
         event => {
+
           const target =
             document.querySelector(
               "#about"
             );
 
           if (target) {
+
             event.preventDefault();
 
             target.scrollIntoView({
               behavior:
                 "smooth"
             });
+
           }
+
         }
       );
+
     }
   );
 
@@ -970,26 +1124,33 @@ function setupNavigation() {
 
   contactLinks.forEach(
     link => {
+
       link.addEventListener(
         "click",
         event => {
+
           const target =
             document.querySelector(
               "#contact"
             );
 
           if (target) {
+
             event.preventDefault();
 
             target.scrollIntoView({
               behavior:
                 "smooth"
             });
+
           }
+
         }
       );
+
     }
   );
+
 }
 
 /* =====================================================
@@ -997,6 +1158,7 @@ function setupNavigation() {
 ===================================================== */
 
 function escapeHtml(value) {
+
   return String(
     value ?? ""
   )
@@ -1020,6 +1182,7 @@ function escapeHtml(value) {
       /'/g,
       "&#039;"
     );
+
 }
 
 /* =====================================================
@@ -1027,17 +1190,20 @@ function escapeHtml(value) {
 ===================================================== */
 
 function setup3DLogo() {
+
   const container =
     document.getElementById(
       "btch-3d-logo"
     );
 
   if (!container) {
+
     console.warn(
       "BTCH 3D logo container not found."
     );
 
     return;
+
   }
 
   console.log(
@@ -1047,28 +1213,57 @@ function setup3DLogo() {
   container.innerHTML = "";
 
   /*
-    MOVE THE WHOLE 3D CANVAS DOWN.
+    RESPONSIVE 3D LOGO POSITION
 
-    THIS IS THE IMPORTANT CHANGE.
-
-    The old position was:
-      -145px
-
-    The new position is:
+    COMPUTER:
       -55px
 
-    This keeps the logo below the white
-    header and inside the black hero.
+    TABLET:
+      0px
+
+    PHONE:
+      10px
+
+    This keeps the logo inside the
+    black hero instead of behind the
+    white header on phones.
   */
 
-  container.style.top =
-    "-55px";
+  function position3DLogo() {
 
-  container.style.left =
-    "50%";
+    if (window.innerWidth <= 480) {
 
-  container.style.transform =
-    "translateX(-50%)";
+      container.style.top =
+        "10px";
+
+    } else if (
+      window.innerWidth <= 768
+    ) {
+
+      container.style.top =
+        "0px";
+
+    } else {
+
+      container.style.top =
+        "-55px";
+
+    }
+
+    container.style.left =
+      "50%";
+
+    container.style.transform =
+      "translateX(-50%)";
+
+  }
+
+  position3DLogo();
+
+  window.addEventListener(
+    "resize",
+    position3DLogo
+  );
 
   /* ===================================================
      FIXED SCENE
@@ -1244,9 +1439,11 @@ function setup3DLogo() {
     new GLTFLoader();
 
   loader.load(
+
     "./models/bitch.glb",
 
     function(gltf) {
+
       console.log(
         "BTCH 3D logo loaded successfully."
       );
@@ -1260,10 +1457,12 @@ function setup3DLogo() {
         gltf.animations &&
         gltf.animations.length
       ) {
+
         console.log(
           "Ignoring GLB animations:",
           gltf.animations.length
         );
+
       }
 
       const originalModel =
@@ -1284,26 +1483,34 @@ function setup3DLogo() {
 
       originalModel.traverse(
         child => {
+
           if (!child.isMesh) {
+
             return;
+
           }
 
           if (!child.geometry) {
+
             return;
+
           }
 
           meshes.push(
             child
           );
+
         }
       );
 
       if (!meshes.length) {
+
         console.error(
           "BTCH GLB contains no usable meshes."
         );
 
         return;
+
       }
 
       /*
@@ -1313,6 +1520,7 @@ function setup3DLogo() {
 
       meshes.forEach(
         originalMesh => {
+
           const geometry =
             originalMesh.geometry.clone();
 
@@ -1321,13 +1529,18 @@ function setup3DLogo() {
           );
 
           geometry.computeBoundingBox();
+
           geometry.computeBoundingSphere();
 
           const material =
             new THREE.MeshStandardMaterial({
+
               color: 0xffffff,
+
               metalness: 0.75,
+
               roughness: 0.22
+
             });
 
           const mesh =
@@ -1369,6 +1582,7 @@ function setup3DLogo() {
           cleanModel.add(
             mesh
           );
+
         }
       );
 
@@ -1425,11 +1639,13 @@ function setup3DLogo() {
           maxDimension
         )
       ) {
+
         console.error(
           "BTCH clean logo has invalid dimensions."
         );
 
         return;
+
       }
 
       /*
@@ -1506,6 +1722,7 @@ function setup3DLogo() {
         "Target size:",
         targetSize
       );
+
     },
 
     /* =================================================
@@ -1513,9 +1730,12 @@ function setup3DLogo() {
     ================================================= */
 
     function(progress) {
+
       if (progress.total) {
+
         console.log(
           "Loading BTCH 3D logo:",
+
           Math.round(
             (
               progress.loaded /
@@ -1523,7 +1743,9 @@ function setup3DLogo() {
             ) * 100
           ) + "%"
         );
+
       }
+
     },
 
     /* =================================================
@@ -1531,11 +1753,14 @@ function setup3DLogo() {
     ================================================= */
 
     function(error) {
+
       console.error(
         "BTCH 3D logo failed to load:",
         error
       );
+
     }
+
   );
 
   /* ===================================================
@@ -1548,6 +1773,7 @@ function setup3DLogo() {
   =================================================== */
 
   function animate() {
+
     requestAnimationFrame(
       animate
     );
@@ -1555,14 +1781,17 @@ function setup3DLogo() {
     if (
       window.btch3DLogo
     ) {
+
       window.btch3DLogo.rotation.y +=
         0.003;
+
     }
 
     renderer.render(
       scene,
       camera
     );
+
   }
 
   animate();
@@ -1572,6 +1801,7 @@ function setup3DLogo() {
   =================================================== */
 
   function resize3DLogo() {
+
     const width =
       container.clientWidth;
 
@@ -1582,7 +1812,9 @@ function setup3DLogo() {
       !width ||
       !height
     ) {
+
       return;
+
     }
 
     camera.aspect =
@@ -1595,12 +1827,14 @@ function setup3DLogo() {
       width,
       height
     );
+
   }
 
   window.addEventListener(
     "resize",
     resize3DLogo
   );
+
 }
 
 /* =====================================================
@@ -1610,9 +1844,14 @@ function setup3DLogo() {
 document.addEventListener(
   "DOMContentLoaded",
   () => {
+
     setupNavigation();
+
     setupCart();
+
     loadShopifyProducts();
+
     setup3DLogo();
+
   }
 );
