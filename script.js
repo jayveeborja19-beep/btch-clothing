@@ -1234,14 +1234,14 @@ function setup3DLogo() {
     if (window.innerWidth <= 480) {
 
       container.style.top =
-        "10px";
+        "100px";
 
     } else if (
       window.innerWidth <= 768
     ) {
 
       container.style.top =
-        "0px";
+        "45px";
 
     } else {
 
