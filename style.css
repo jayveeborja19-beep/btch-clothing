@@ -3,6 +3,7 @@
    CLEAN WHITE / BLACK STREETWEAR
 ===================================================== */
 
+
 /* =========================
    RESET
 ========================= */
@@ -27,6 +28,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+
 /* =====================================================
    HEADER
 ===================================================== */
@@ -47,6 +49,7 @@ header {
   backdrop-filter: blur(8px);
 }
 
+
 /* LOGO */
 
 .logo {
@@ -64,6 +67,7 @@ header {
   display: block;
   object-fit: contain;
 }
+
 
 /* NAVIGATION */
 
@@ -88,6 +92,7 @@ header nav a:hover {
   opacity: 0.5;
 }
 
+
 /* =====================================================
    HERO
 ===================================================== */
@@ -103,8 +108,8 @@ header nav a:hover {
   background-image: url("hero.jpg");
 
   /*
-     FULL-WIDTH HERO
-     Keep hero image positioning unchanged.
+    FULL-WIDTH HERO
+    Keep hero image positioning unchanged.
   */
 
   background-size: cover;
@@ -114,6 +119,7 @@ header nav a:hover {
 
   color: #ffffff;
 }
+
 
 /* HERO OVERLAY */
 
@@ -125,6 +131,7 @@ header nav a:hover {
   pointer-events: none;
 }
 
+
 /* HERO CONTENT */
 
 .hero-content {
@@ -132,6 +139,7 @@ header nav a:hover {
   z-index: 2;
   max-width: 950px;
 }
+
 
 /* HERO TITLE */
 
@@ -143,6 +151,7 @@ header nav a:hover {
   color: #ffffff;
 }
 
+
 /* HERO DESCRIPTION */
 
 .hero p {
@@ -151,6 +160,7 @@ header nav a:hover {
   letter-spacing: 0.18em;
   color: #eeeeee;
 }
+
 
 /* HERO BUTTON */
 
@@ -176,6 +186,7 @@ header nav a:hover {
   transform: translateY(-2px);
 }
 
+
 /* =====================================================
    SHOP
 ===================================================== */
@@ -191,6 +202,7 @@ header nav a:hover {
   background: #000000;
   color: #ffffff;
 }
+
 
 /* SECTION HEADER */
 
@@ -214,6 +226,7 @@ header nav a:hover {
   color: #ffffff;
 }
 
+
 /* =====================================================
    PRODUCTS
 ===================================================== */
@@ -224,6 +237,7 @@ header nav a:hover {
   gap: 60px 35px;
 }
 
+
 /* PRODUCT CARD */
 
 .product-card {
@@ -233,6 +247,7 @@ header nav a:hover {
   background: #000000;
   color: #ffffff;
 }
+
 
 /* PRODUCT IMAGE WRAPPER */
 
@@ -247,6 +262,7 @@ header nav a:hover {
   position: relative;
 }
 
+
 /* PRODUCT IMAGES */
 
 .product-image img {
@@ -259,6 +275,7 @@ header nav a:hover {
     transform 0.4s ease,
     opacity 0.3s ease;
 }
+
 
 /* DIRECT PRODUCT IMAGE */
 
@@ -275,6 +292,7 @@ header nav a:hover {
     opacity 0.3s ease;
 }
 
+
 /* PRODUCT HOVER */
 
 .product-card:hover .product-image img,
@@ -282,6 +300,7 @@ header nav a:hover {
   transform: scale(1.025);
   opacity: 0.92;
 }
+
 
 /* =====================================================
    DICE FRONT / BACK
@@ -310,6 +329,7 @@ header nav a:hover {
   z-index: 1;
 }
 
+
 /* SHOW BACK WHEN HOVERING */
 
 .dice-product:hover .dice-front {
@@ -319,6 +339,7 @@ header nav a:hover {
 .dice-product:hover .dice-back {
   opacity: 1;
 }
+
 
 /* PRODUCT NAME */
 
@@ -333,6 +354,7 @@ header nav a:hover {
   color: #ffffff;
 }
 
+
 /* PRICE */
 
 .product-card p {
@@ -343,6 +365,7 @@ header nav a:hover {
   /* WHITE */
   color: #ffffff;
 }
+
 
 /* =====================================================
    ABOUT
@@ -385,6 +408,7 @@ header nav a:hover {
   color: #333333;
 }
 
+
 /* =====================================================
    CONTACT
 ===================================================== */
@@ -411,6 +435,7 @@ header nav a:hover {
   color: #111111;
 }
 
+
 /* CONTACT LINKS */
 
 .contact-links {
@@ -433,6 +458,7 @@ header nav a:hover {
   color: #000000;
 }
 
+
 /* =====================================================
    CART
 ===================================================== */
@@ -450,6 +476,7 @@ header nav a:hover {
   display: flex;
 }
 
+
 /* CART CONTAINER */
 
 .cart-container {
@@ -463,6 +490,7 @@ header nav a:hover {
   box-shadow:
     -10px 0 30px rgba(0, 0, 0, 0.3);
 }
+
 
 /* CART HEADER */
 
@@ -486,6 +514,7 @@ header nav a:hover {
   cursor: pointer;
   color: #111111;
 }
+
 
 /* CART ITEMS */
 
@@ -518,6 +547,7 @@ header nav a:hover {
   margin-bottom: 10px;
 }
 
+
 /* QUANTITY */
 
 .quantity-controls {
@@ -535,6 +565,7 @@ header nav a:hover {
   cursor: pointer;
 }
 
+
 /* REMOVE */
 
 .remove-item {
@@ -545,11 +576,13 @@ header nav a:hover {
   cursor: pointer;
 }
 
+
 /* CART FOOTER */
 
 .cart-footer {
   margin-top: 30px;
 }
+
 
 /* TOTAL */
 
@@ -569,6 +602,7 @@ header nav a:hover {
   font-size: 18px;
 }
 
+
 /* CHECKOUT */
 
 #checkout-button {
@@ -586,6 +620,7 @@ header nav a:hover {
   opacity: 0.8;
 }
 
+
 /* =====================================================
    FOOTER
 ===================================================== */
@@ -598,6 +633,7 @@ footer {
   text-align: center;
   border-top: 1px solid #eeeeee;
 }
+
 
 /* FOOTER LOGO */
 
@@ -613,6 +649,7 @@ footer {
   margin: 0 auto;
   object-fit: contain;
 }
+
 
 /* FOOTER LINKS */
 
@@ -635,6 +672,7 @@ footer {
   color: #111111;
 }
 
+
 /* COPYRIGHT */
 
 .copyright {
@@ -643,6 +681,7 @@ footer {
   letter-spacing: 1px;
   color: #aaaaaa;
 }
+
 
 /* =====================================================
    TABLET
@@ -656,6 +695,7 @@ footer {
 
 }
 
+
 /* =====================================================
    MOBILE
 ===================================================== */
@@ -666,6 +706,7 @@ footer {
     height: 68px;
     padding: 9px 25px;
   }
+
 
   /* HEADER LOGO */
 
@@ -679,6 +720,7 @@ footer {
     max-height: 45px;
   }
 
+
   /* NAV */
 
   header nav {
@@ -688,6 +730,7 @@ footer {
   header nav a {
     font-size: 10px;
   }
+
 
   /* HERO */
 
@@ -711,6 +754,7 @@ footer {
     letter-spacing: 0.12em;
   }
 
+
   /* SHOP */
 
   .shop-section {
@@ -727,6 +771,7 @@ footer {
     font-size: 26px;
   }
 
+
   /* PRODUCT TEXT */
 
   .product-card h3 {
@@ -737,6 +782,7 @@ footer {
     font-size: 12px;
   }
 
+
   /* ABOUT */
 
   .about-section {
@@ -746,6 +792,7 @@ footer {
   .about-section h2 {
     font-size: 32px;
   }
+
 
   /* CONTACT */
 
@@ -762,6 +809,7 @@ footer {
     gap: 25px;
   }
 
+
   /* FOOTER */
 
   .footer-logo img {
@@ -769,6 +817,7 @@ footer {
   }
 
 }
+
 
 /* =====================================================
    SMALL PHONES
@@ -779,6 +828,7 @@ footer {
   header {
     padding: 8px 18px;
   }
+
 
   /* HEADER LOGO */
 
@@ -792,6 +842,7 @@ footer {
     max-height: 38px;
   }
 
+
   /* NAV */
 
   header nav {
@@ -801,6 +852,7 @@ footer {
   header nav a {
     font-size: 9px;
   }
+
 
   /* HERO */
 
@@ -828,6 +880,7 @@ footer {
     font-size: 10px;
   }
 
+
   /* PRODUCTS */
 
   .products-grid {
@@ -851,6 +904,7 @@ footer {
     font-size: 11px;
   }
 
+
   /* FOOTER */
 
   footer {
@@ -862,6 +916,7 @@ footer {
     gap: 18px;
   }
 
+
   /* CART */
 
   .cart-container {
@@ -869,7 +924,10 @@ footer {
     max-width: 100%;
   }
 
-}/* =====================================================
+}
+
+
+/* =====================================================
    BTCH CART ICON — TOP RIGHT
 ===================================================== */
 
@@ -934,6 +992,7 @@ footer {
   line-height: 1;
 }
 
+
 /* ================= MOBILE ================= */
 
 @media (max-width: 768px) {
@@ -959,8 +1018,12 @@ footer {
     font-size: 8px;
   }
 
-}/* =====================================================
+}
+
+
+/* =====================================================
    BTCH 3D SPINNING LOGO
+   TOP CENTER OF HERO
 ===================================================== */
 
 #btch-3d-logo {
@@ -969,15 +1032,20 @@ footer {
   width: 430px;
   height: 430px;
 
-  right: 8%;
-  top: 50%;
+  /* TOP CENTER */
+  top: 95px;
+  left: 50%;
 
-  transform: translateY(-50%);
+  /* CENTER THE LOGO HORIZONTALLY */
+  transform: translateX(-50%);
 
   z-index: 1;
 
   pointer-events: none;
 }
+
+
+/* 3D CANVAS */
 
 #btch-3d-logo canvas {
   width: 100% !important;
@@ -986,9 +1054,9 @@ footer {
 }
 
 
-/* =========================
+/* =====================================================
    3D LOGO — MOBILE
-========================= */
+===================================================== */
 
 @media (max-width: 768px) {
 
@@ -996,14 +1064,19 @@ footer {
     width: 280px;
     height: 280px;
 
-    right: 50%;
-    top: 32%;
+    /* TOP CENTER */
+    top: 78px;
+    left: 50%;
 
-    transform: translateX(50%) translateY(-50%);
+    transform: translateX(-50%);
   }
 
 }
 
+
+/* =====================================================
+   3D LOGO — SMALL PHONES
+===================================================== */
 
 @media (max-width: 480px) {
 
@@ -1011,7 +1084,10 @@ footer {
     width: 230px;
     height: 230px;
 
-    top: 30%;
+    top: 72px;
+    left: 50%;
+
+    transform: translateX(-50%);
   }
 
 }
