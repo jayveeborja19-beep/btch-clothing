@@ -9,7 +9,7 @@ import { GLTFLoader } from "https://esm.sh/three@0.180.0/examples/jsm/loaders/GL
 const SHOPIFY_DOMAIN = "btch-clothing.myshopify.com";
 
 const STOREFRONT_ACCESS_TOKEN =
-  "d8463ddfb6962692451d57928255c2ee";
+  "d8463ddfb6962692451d57928255c2ee"
 
 const API_VERSION = "2026-07";
 
@@ -1333,6 +1333,14 @@ function setup3DLogo() {
   );
 
 
+  renderer.toneMapping =
+    THREE.ACESFilmicToneMapping;
+
+
+  renderer.toneMappingExposure =
+    1.15;
+
+
   container.appendChild(
     renderer.domElement
   );
@@ -1345,7 +1353,7 @@ function setup3DLogo() {
   const ambientLight =
     new THREE.AmbientLight(
       0xffffff,
-      2.5
+      3
     );
 
   scene.add(
@@ -1353,16 +1361,28 @@ function setup3DLogo() {
   );
 
 
+  const hemisphereLight =
+    new THREE.HemisphereLight(
+      0xffffff,
+      0x222222,
+      2
+    );
+
+  scene.add(
+    hemisphereLight
+  );
+
+
   const mainLight =
     new THREE.DirectionalLight(
       0xffffff,
-      4
+      5
     );
 
   mainLight.position.set(
-    4,
+    5,
     6,
-    6
+    8
   );
 
   scene.add(
@@ -1373,13 +1393,13 @@ function setup3DLogo() {
   const fillLight =
     new THREE.DirectionalLight(
       0xffffff,
-      2
+      3
     );
 
   fillLight.position.set(
-    -5,
-    2,
-    4
+    -6,
+    3,
+    5
   );
 
   scene.add(
@@ -1390,18 +1410,25 @@ function setup3DLogo() {
   const rimLight =
     new THREE.DirectionalLight(
       0xffffff,
-      3
+      4
     );
 
   rimLight.position.set(
     0,
-    3,
-    -6
+    5,
+    -8
   );
 
   scene.add(
     rimLight
   );
+
+
+  /* =========================
+     MODEL
+  ========================= */
+
+  let logo = null;
 
 
   /* =========================
@@ -1424,8 +1451,63 @@ function setup3DLogo() {
       );
 
 
-      const logo =
+      logo =
         gltf.scene;
+
+
+      /* =========================
+         MAKE EVERY MESH VISIBLE
+      ========================= */
+
+      logo.traverse(
+        child => {
+
+          if (!child.isMesh) {
+            return;
+          }
+
+
+          child.visible =
+            true;
+
+
+          child.frustumCulled =
+            false;
+
+
+          /*
+             Give the logo a guaranteed
+             visible material.
+
+             We intentionally use a
+             bright metallic material
+             here so the model cannot
+             disappear because of a
+             dark/unsupported GLB
+             material.
+          */
+
+          child.material =
+            new THREE.MeshStandardMaterial({
+
+              color: 0xffffff,
+
+              metalness: 0.75,
+
+              roughness: 0.22
+
+            });
+
+
+          child.castShadow =
+            false;
+
+
+          child.receiveShadow =
+            false;
+
+        }
+      );
 
 
       scene.add(
@@ -1434,24 +1516,24 @@ function setup3DLogo() {
 
 
       /* =========================
-         CENTER MODEL
+         CENTER ORIGINAL MODEL
       ========================= */
 
-      const box =
+      const originalBox =
         new THREE.Box3()
           .setFromObject(
             logo
           );
 
 
-      const center =
-        box.getCenter(
+      const originalCenter =
+        originalBox.getCenter(
           new THREE.Vector3()
         );
 
 
       logo.position.sub(
-        center
+        originalCenter
       );
 
 
@@ -1459,18 +1541,34 @@ function setup3DLogo() {
          SCALE MODEL
       ========================= */
 
-      const size =
-        box.getSize(
+      const originalSize =
+        originalBox.getSize(
           new THREE.Vector3()
         );
 
 
       const maxDimension =
         Math.max(
-          size.x,
-          size.y,
-          size.z
+          originalSize.x,
+          originalSize.y,
+          originalSize.z
         );
+
+
+      if (
+        !maxDimension ||
+        !Number.isFinite(
+          maxDimension
+        )
+      ) {
+
+        console.error(
+          "BTCH 3D logo has invalid dimensions."
+        );
+
+        return;
+
+      }
 
 
       const targetSize =
@@ -1490,15 +1588,92 @@ function setup3DLogo() {
 
 
       /* =========================
-         SAVE MODEL
+         CENTER AGAIN AFTER SCALE
       ========================= */
 
-      window.btch3DLogo =
-        logo;
+      const finalBox =
+        new THREE.Box3()
+          .setFromObject(
+            logo
+          );
+
+
+      const finalCenter =
+        finalBox.getCenter(
+          new THREE.Vector3()
+        );
+
+
+      logo.position.sub(
+        finalCenter
+      );
+
+
+      /* =========================
+         FIT CAMERA TO MODEL
+      ========================= */
+
+      const finalSize =
+        finalBox.getSize(
+          new THREE.Vector3()
+        );
+
+
+      const finalMaxDimension =
+        Math.max(
+          finalSize.x,
+          finalSize.y,
+          finalSize.z
+        );
+
+
+      const verticalFov =
+        THREE.MathUtils.degToRad(
+          camera.fov
+        );
+
+
+      const cameraDistance =
+        (
+          finalMaxDimension /
+          2
+        ) /
+        Math.tan(
+          verticalFov / 2
+        );
+
+
+      camera.position.set(
+        0,
+        0,
+        Math.max(
+          cameraDistance * 1.25,
+          4
+        )
+      );
+
+
+      camera.lookAt(
+        0,
+        0,
+        0
+      );
 
 
       console.log(
         "BTCH 3D logo is ready and spinning."
+      );
+
+
+      console.log(
+        "BTCH 3D logo size:",
+        finalSize
+      );
+
+
+      console.log(
+        "BTCH 3D camera distance:",
+        camera.position.z
       );
 
     },
@@ -1511,9 +1686,10 @@ function setup3DLogo() {
         console.log(
           "Loading BTCH 3D logo:",
           Math.round(
-            (progress.loaded /
-              progress.total) *
-              100
+            (
+              progress.loaded /
+              progress.total
+            ) * 100
           ) + "%"
         );
 
@@ -1545,11 +1721,9 @@ function setup3DLogo() {
     );
 
 
-    if (
-      window.btch3DLogo
-    ) {
+    if (logo) {
 
-      window.btch3DLogo.rotation.y +=
+      logo.rotation.y +=
         0.008;
 
     }
