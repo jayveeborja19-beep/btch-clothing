@@ -959,4 +959,59 @@ footer {
     font-size: 8px;
   }
 
+}/* =====================================================
+   BTCH 3D SPINNING LOGO
+===================================================== */
+
+#btch-3d-logo {
+  position: absolute;
+
+  width: 430px;
+  height: 430px;
+
+  right: 8%;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  z-index: 1;
+
+  pointer-events: none;
+}
+
+#btch-3d-logo canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+
+/* =========================
+   3D LOGO — MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+  #btch-3d-logo {
+    width: 280px;
+    height: 280px;
+
+    right: 50%;
+    top: 32%;
+
+    transform: translateX(50%) translateY(-50%);
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  #btch-3d-logo {
+    width: 230px;
+    height: 230px;
+
+    top: 30%;
+  }
+
 }
