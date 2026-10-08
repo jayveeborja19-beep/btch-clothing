@@ -1,6 +1,11 @@
+// COMPLETE script.js
+// Shopify + Cart + Checkout + BTCH 3D GLB logo
+
+// IMPORTANT:
+// Keep your existing Shopify Storefront token on this line.
+
 import * as THREE from "https://esm.sh/three@0.180.0";
 import { GLTFLoader } from "https://esm.sh/three@0.180.0/examples/jsm/loaders/GLTFLoader.js";
-
 
 /* =====================================================
    SHOPIFY
@@ -9,7 +14,7 @@ import { GLTFLoader } from "https://esm.sh/three@0.180.0/examples/jsm/loaders/GL
 const SHOPIFY_DOMAIN = "btch-clothing.myshopify.com";
 
 const STOREFRONT_ACCESS_TOKEN =
-  "d8463ddfb6962692451d57928255c2ee"
+  "d8463ddfb6962692451d57928255c2ee";
 
 const API_VERSION = "2026-07";
 
@@ -19,13 +24,11 @@ const STOREFRONT_API_URL =
 let products = [];
 let cart = [];
 
-
 /* =====================================================
    SHOPIFY API
 ===================================================== */
 
 async function shopifyFetch(query, variables = {}) {
-
   const response = await fetch(STOREFRONT_API_URL, {
     method: "POST",
 
@@ -50,7 +53,10 @@ async function shopifyFetch(query, variables = {}) {
 
   const result = await response.json();
 
-  if (result.errors && result.errors.length) {
+  if (
+    result.errors &&
+    result.errors.length
+  ) {
     throw new Error(
       result.errors
         .map(error => error.message)
@@ -61,21 +67,16 @@ async function shopifyFetch(query, variables = {}) {
   return result.data;
 }
 
-
 /* =====================================================
    LOAD PRODUCTS
 ===================================================== */
 
 async function loadShopifyProducts() {
-
   const query = `
 
     query {
-
       products(first: 50) {
-
         nodes {
-
           id
           title
           handle
@@ -87,18 +88,14 @@ async function loadShopifyProducts() {
           }
 
           images(first: 10) {
-
             nodes {
               url
               altText
             }
-
           }
 
           variants(first: 50) {
-
             nodes {
-
               id
               title
               availableForSale
@@ -112,21 +109,15 @@ async function loadShopifyProducts() {
                 url
                 altText
               }
-
             }
-
           }
-
         }
-
       }
-
     }
 
   `;
 
   try {
-
     const data =
       await shopifyFetch(query);
 
@@ -141,30 +132,24 @@ async function loadShopifyProducts() {
     );
 
   } catch (error) {
-
     console.error(
       "Could not load Shopify products:",
       error
     );
-
   }
-
 }
-
 
 /* =====================================================
    RENDER PRODUCTS
 ===================================================== */
 
 function renderProducts(items) {
-
   const grid =
     document.querySelector(".products-grid") ||
     document.querySelector("#products-grid") ||
     document.querySelector(".product-grid");
 
   if (!grid) {
-
     console.warn(
       "Product grid not found."
     );
@@ -175,7 +160,6 @@ function renderProducts(items) {
   grid.innerHTML = "";
 
   items.forEach(product => {
-
     const variant =
       product.variants &&
       product.variants.nodes &&
@@ -209,16 +193,13 @@ function renderProducts(items) {
     card.innerHTML = `
 
       <div class="product-image">
-
         <img
           src="${escapeHtml(image)}"
           alt="${escapeHtml(product.title)}"
         >
-
       </div>
 
       <div class="product-info">
-
         <h3>
           ${escapeHtml(product.title)}
         </h3>
@@ -237,26 +218,20 @@ function renderProducts(items) {
         >
           ADD TO CART
         </button>
-
       </div>
 
     `;
 
     grid.appendChild(card);
-
   });
-
 
   document
     .querySelectorAll(".add-to-cart")
     .forEach(button => {
-
       button.addEventListener(
         "click",
         () => {
-
           addToCart({
-
             variantId:
               button.dataset.variantId,
 
@@ -264,31 +239,26 @@ function renderProducts(items) {
               button.dataset.productTitle,
 
             price:
-              Number(button.dataset.price),
+              Number(
+                button.dataset.price
+              ),
 
             image:
               button.dataset.image,
 
             quantity: 1
-
           });
-
         }
       );
-
     });
-
 }
-
 
 /* =====================================================
    CART ELEMENTS
 ===================================================== */
 
 function getCartElements() {
-
   return {
-
     overlay:
       document.getElementById(
         "cart-overlay"
@@ -313,18 +283,14 @@ function getCartElements() {
       document.getElementById(
         "close-cart"
       )
-
   };
-
 }
-
 
 /* =====================================================
    ADD TO CART
 ===================================================== */
 
 function addToCart(item) {
-
   const existing =
     cart.find(
       product =>
@@ -333,41 +299,29 @@ function addToCart(item) {
     );
 
   if (existing) {
-
     existing.quantity += 1;
-
   } else {
-
     cart.push(item);
-
   }
 
   updateCart();
-
   showCart();
-
 }
-
 
 /* =====================================================
    UPDATE CART
 ===================================================== */
 
 function updateCart() {
-
   createCartButton();
-
   renderCart();
-
 }
-
 
 /* =====================================================
    CART BUTTON
 ===================================================== */
 
 function createCartButton() {
-
   const header =
     document.querySelector("header");
 
@@ -378,9 +332,7 @@ function createCartButton() {
       ".cart-button"
     );
 
-
   if (!button) {
-
     button =
       document.createElement(
         "button"
@@ -398,14 +350,12 @@ function createCartButton() {
     );
 
     button.innerHTML = `
-
       <svg
         class="cart-icon"
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-
         <path
           d="M3 4H5L7.2 15.2C7.4 16.2 8.3 17 9.4 17H18.2C19.2 17 20.1 16.3 20.4 15.4L22 9H6"
           stroke="currentColor"
@@ -427,24 +377,17 @@ function createCartButton() {
           r="1.2"
           fill="currentColor"
         />
-
       </svg>
 
       <span class="cart-count">
         0
       </span>
-
     `;
 
-    header.appendChild(
-      button
-    );
-
+    header.appendChild(button);
   }
 
-
   if (!button.dataset.cartListener) {
-
     button.addEventListener(
       "click",
       showCart
@@ -452,9 +395,7 @@ function createCartButton() {
 
     button.dataset.cartListener =
       "true";
-
   }
-
 
   const countElement =
     button.querySelector(
@@ -469,21 +410,16 @@ function createCartButton() {
     );
 
   if (countElement) {
-
     countElement.textContent =
       count;
-
   }
-
 }
-
 
 /* =====================================================
    RENDER CART
 ===================================================== */
 
 function renderCart() {
-
   const {
     items,
     total,
@@ -496,45 +432,34 @@ function renderCart() {
 
   items.innerHTML = "";
 
-
   if (cart.length === 0) {
-
     items.innerHTML = `
-
       <p class="empty-cart">
         YOUR CART IS EMPTY.
       </p>
-
     `;
 
     total.textContent =
       "₱0";
 
     if (checkoutButton) {
-
       checkoutButton.disabled =
         true;
-
     }
 
     return;
-
   }
-
 
   let cartTotal = 0;
 
-
   cart.forEach(
     (item, index) => {
-
       const itemTotal =
         item.price *
         item.quantity;
 
       cartTotal +=
         itemTotal;
-
 
       const cartItem =
         document.createElement(
@@ -544,23 +469,23 @@ function renderCart() {
       cartItem.className =
         "cart-item";
 
-
       cartItem.innerHTML = `
-
         <div class="cart-item-image">
-
           <img
-            src="${escapeHtml(item.image || "")}"
-            alt="${escapeHtml(item.title)}"
+            src="${escapeHtml(
+              item.image || ""
+            )}"
+            alt="${escapeHtml(
+              item.title
+            )}"
           >
-
         </div>
 
-
         <div class="cart-item-info">
-
           <h4>
-            ${escapeHtml(item.title)}
+            ${escapeHtml(
+              item.title
+            )}
           </h4>
 
           <p>
@@ -573,9 +498,7 @@ function renderCart() {
             )}
           </p>
 
-
           <div class="cart-quantity">
-
             <button
               class="quantity-minus"
               type="button"
@@ -595,9 +518,7 @@ function renderCart() {
             >
               +
             </button>
-
           </div>
-
 
           <button
             class="remove-item"
@@ -606,12 +527,9 @@ function renderCart() {
           >
             REMOVE
           </button>
-
         </div>
 
-
         <div class="cart-item-total">
-
           ₱${itemTotal.toLocaleString(
             "en-PH",
             {
@@ -619,19 +537,14 @@ function renderCart() {
               maximumFractionDigits: 2
             }
           )}
-
         </div>
-
       `;
-
 
       items.appendChild(
         cartItem
       );
-
     }
   );
-
 
   total.textContent =
     "₱" +
@@ -643,84 +556,64 @@ function renderCart() {
       }
     );
 
-
   if (checkoutButton) {
-
     checkoutButton.disabled =
       false;
-
   }
-
 
   document
     .querySelectorAll(
       ".quantity-minus"
     )
     .forEach(button => {
-
       button.addEventListener(
         "click",
         () => {
-
           changeQuantity(
             Number(
               button.dataset.index
             ),
             -1
           );
-
         }
       );
-
     });
-
 
   document
     .querySelectorAll(
       ".quantity-plus"
     )
     .forEach(button => {
-
       button.addEventListener(
         "click",
         () => {
-
           changeQuantity(
             Number(
               button.dataset.index
             ),
             1
           );
-
         }
       );
-
     });
-
 
   document
     .querySelectorAll(
       ".remove-item"
     )
     .forEach(button => {
-
       button.addEventListener(
         "click",
         () => {
-
           removeFromCart(
             Number(
               button.dataset.index
             )
           );
-
         }
       );
-
     });
-
 }
-
 
 /* =====================================================
    CHANGE QUANTITY
@@ -730,35 +623,32 @@ function changeQuantity(
   index,
   amount
 ) {
-
-  if (!cart[index]) return;
+  if (!cart[index])
+    return;
 
   cart[index].quantity +=
     amount;
 
   if (
-    cart[index].quantity <= 0
+    cart[index].quantity <=
+    0
   ) {
-
     cart.splice(
       index,
       1
     );
-
   }
 
   updateCart();
-
 }
-
 
 /* =====================================================
    REMOVE FROM CART
 ===================================================== */
 
 function removeFromCart(index) {
-
-  if (!cart[index]) return;
+  if (!cart[index])
+    return;
 
   cart.splice(
     index,
@@ -766,22 +656,18 @@ function removeFromCart(index) {
   );
 
   updateCart();
-
 }
-
 
 /* =====================================================
    SHOW CART
 ===================================================== */
 
 function showCart() {
-
   const {
     overlay
   } = getCartElements();
 
   if (!overlay) {
-
     console.error(
       "Cart overlay not found."
     );
@@ -799,21 +685,19 @@ function showCart() {
 
   document.body.style.overflow =
     "hidden";
-
 }
-
 
 /* =====================================================
    CLOSE CART
 ===================================================== */
 
 function closeCart() {
-
   const {
     overlay
   } = getCartElements();
 
-  if (!overlay) return;
+  if (!overlay)
+    return;
 
   overlay.hidden =
     true;
@@ -823,49 +707,37 @@ function closeCart() {
 
   document.body.style.overflow =
     "";
-
 }
-
 
 /* =====================================================
    CHECKOUT
 ===================================================== */
 
 async function checkout() {
-
   if (cart.length === 0) {
-
     alert(
       "Your cart is empty."
     );
 
     return;
-
   }
-
 
   const {
     checkoutButton
   } = getCartElements();
 
-
   if (checkoutButton) {
-
     checkoutButton.disabled =
       true;
 
     checkoutButton.textContent =
       "CONNECTING...";
-
   }
 
-
   try {
-
     const lines =
       cart.map(
         item => ({
-
           merchandiseId:
             item.variantId,
 
@@ -873,10 +745,8 @@ async function checkout() {
             Number(
               item.quantity
             )
-
         })
       );
-
 
     const mutation = `
 
@@ -889,35 +759,23 @@ async function checkout() {
         ) {
 
           cart {
-
             id
-
             checkoutUrl
-
           }
 
           userErrors {
-
             field
-
             message
-
           }
 
           warnings {
-
             code
-
             message
-
           }
-
         }
-
       }
 
     `;
-
 
     const data =
       await shopifyFetch(
@@ -929,16 +787,13 @@ async function checkout() {
         }
       );
 
-
     const result =
       data.cartCreate;
-
 
     if (
       result.userErrors &&
       result.userErrors.length > 0
     ) {
-
       throw new Error(
         result.userErrors
           .map(
@@ -947,154 +802,115 @@ async function checkout() {
           )
           .join("\n")
       );
-
     }
-
 
     if (
       result.warnings &&
       result.warnings.length > 0
     ) {
-
       console.warn(
         "Shopify warnings:",
         result.warnings
       );
-
     }
-
 
     if (
       !result.cart ||
       !result.cart.checkoutUrl
     ) {
-
       throw new Error(
         "Shopify did not return a checkout URL."
       );
-
     }
-
 
     window.location.assign(
       result.cart.checkoutUrl
     );
 
-
   } catch (error) {
-
     console.error(
       "Checkout error:",
       error
     );
-
 
     alert(
       "CHECKOUT ERROR:\n\n" +
       error.message
     );
 
-
     if (checkoutButton) {
-
       checkoutButton.disabled =
         false;
 
       checkoutButton.textContent =
         "CHECKOUT";
-
     }
-
   }
-
 }
-
 
 /* =====================================================
    CART SETUP
 ===================================================== */
 
 function setupCart() {
-
   const {
     overlay,
     closeButton,
     checkoutButton
   } = getCartElements();
 
-
   if (overlay) {
-
     overlay.hidden =
       true;
 
     overlay.style.display =
       "none";
 
-
     overlay.addEventListener(
       "click",
       event => {
-
         if (
           event.target ===
           overlay
         ) {
-
           closeCart();
-
         }
-
       }
     );
-
   }
 
-
   if (closeButton) {
-
     closeButton.addEventListener(
       "click",
       closeCart
     );
-
   }
 
-
   if (checkoutButton) {
-
     checkoutButton.addEventListener(
       "click",
       checkout
     );
-
   }
 
-
   updateCart();
-
 }
-
 
 /* =====================================================
    NAVIGATION
 ===================================================== */
 
 function setupNavigation() {
-
   const shopLinks =
     document.querySelectorAll(
       'a[href="#shop"], a[href="#collection"]'
     );
 
-
   shopLinks.forEach(
     link => {
-
       link.addEventListener(
         "click",
         event => {
-
           const target =
             document.querySelector(
               "#shop"
@@ -1106,208 +922,196 @@ function setupNavigation() {
               ".products-section"
             );
 
-
           if (target) {
-
             event.preventDefault();
 
             target.scrollIntoView({
               behavior:
                 "smooth"
             });
-
           }
-
         }
       );
-
     }
   );
-
 
   const aboutLinks =
     document.querySelectorAll(
       'a[href="#about"]'
     );
 
-
   aboutLinks.forEach(
     link => {
-
       link.addEventListener(
         "click",
         event => {
-
           const target =
             document.querySelector(
               "#about"
             );
 
-
           if (target) {
-
             event.preventDefault();
 
             target.scrollIntoView({
               behavior:
                 "smooth"
             });
-
           }
-
         }
       );
-
     }
   );
-
 
   const contactLinks =
     document.querySelectorAll(
       'a[href="#contact"]'
     );
 
-
   contactLinks.forEach(
     link => {
-
       link.addEventListener(
         "click",
         event => {
-
           const target =
             document.querySelector(
               "#contact"
             );
 
-
           if (target) {
-
             event.preventDefault();
 
             target.scrollIntoView({
               behavior:
                 "smooth"
             });
-
           }
-
         }
       );
-
     }
   );
-
 }
-
 
 /* =====================================================
    ESCAPE HTML
 ===================================================== */
 
 function escapeHtml(value) {
-
   return String(
     value ?? ""
   )
-
     .replace(
       /&/g,
       "&amp;"
     )
-
     .replace(
       /</g,
       "&lt;"
     )
-
     .replace(
       />/g,
       "&gt;"
     )
-
     .replace(
       /"/g,
       "&quot;"
     )
-
     .replace(
       /'/g,
       "&#039;"
     );
-
 }
-
 
 /* =====================================================
    BTCH 3D SPINNING GLB LOGO
 ===================================================== */
 
 function setup3DLogo() {
-
   const container =
     document.getElementById(
       "btch-3d-logo"
     );
 
-
   if (!container) {
-
     console.warn(
       "BTCH 3D logo container not found."
     );
 
     return;
-
   }
-
 
   console.log(
     "Starting BTCH 3D logo..."
   );
 
+  container.innerHTML = "";
 
-  /* =========================
-     SCENE
-  ========================= */
+  /*
+    MOVE THE WHOLE 3D CANVAS DOWN.
+
+    THIS IS THE IMPORTANT CHANGE.
+
+    The old position was:
+      -145px
+
+    The new position is:
+      -55px
+
+    This keeps the logo below the white
+    header and inside the black hero.
+  */
+
+  container.style.top =
+    "-55px";
+
+  container.style.left =
+    "50%";
+
+  container.style.transform =
+    "translateX(-50%)";
+
+  /* ===================================================
+     FIXED SCENE
+  =================================================== */
 
   const scene =
     new THREE.Scene();
 
-
-  /* =========================
-     CAMERA
-  ========================= */
-
   const camera =
     new THREE.PerspectiveCamera(
-      35,
+      32,
       container.clientWidth /
         container.clientHeight,
       0.01,
       1000
     );
 
+  /*
+    CAMERA NEVER MOVES.
+    LOGO ROTATES AROUND ITS OWN CENTER.
+  */
 
   camera.position.set(
     0,
     0,
-    5
+    8
   );
 
+  camera.lookAt(
+    0,
+    0,
+    0
+  );
 
-  /* =========================
+  /* ===================================================
      RENDERER
-  ========================= */
+  =================================================== */
 
   const renderer =
     new THREE.WebGLRenderer({
-
       alpha: true,
       antialias: true
-
     });
-
 
   renderer.setPixelRatio(
     Math.min(
@@ -1316,50 +1120,39 @@ function setup3DLogo() {
     )
   );
 
-
   renderer.setSize(
     container.clientWidth,
     container.clientHeight
   );
 
-
   renderer.outputColorSpace =
     THREE.SRGBColorSpace;
-
 
   renderer.setClearColor(
     0x000000,
     0
   );
 
-
   renderer.toneMapping =
     THREE.ACESFilmicToneMapping;
 
-
   renderer.toneMappingExposure =
     1.15;
-
 
   container.appendChild(
     renderer.domElement
   );
 
-
-  /* =========================
+  /* ===================================================
      LIGHTING
-  ========================= */
-
-  const ambientLight =
-    new THREE.AmbientLight(
-      0xffffff,
-      3
-    );
+  =================================================== */
 
   scene.add(
-    ambientLight
+    new THREE.AmbientLight(
+      0xffffff,
+      3.5
+    )
   );
-
 
   const hemisphereLight =
     new THREE.HemisphereLight(
@@ -1371,7 +1164,6 @@ function setup3DLogo() {
   scene.add(
     hemisphereLight
   );
-
 
   const mainLight =
     new THREE.DirectionalLight(
@@ -1389,7 +1181,6 @@ function setup3DLogo() {
     mainLight
   );
 
-
   const fillLight =
     new THREE.DirectionalLight(
       0xffffff,
@@ -1405,7 +1196,6 @@ function setup3DLogo() {
   scene.add(
     fillLight
   );
-
 
   const rimLight =
     new THREE.DirectionalLight(
@@ -1423,137 +1213,211 @@ function setup3DLogo() {
     rimLight
   );
 
+  /* ===================================================
+     FIXED ROTATION PIVOT
+  =================================================== */
 
-  /* =========================
-     MODEL
-  ========================= */
+  const logoPivot =
+    new THREE.Group();
 
-  let logo = null;
+  logoPivot.position.set(
+    0,
+    0,
+    0
+  );
 
+  logoPivot.rotation.set(
+    0,
+    0,
+    0
+  );
 
-  /* =========================
+  scene.add(
+    logoPivot
+  );
+
+  /* ===================================================
      LOAD GLB
-  ========================= */
+  =================================================== */
 
   const loader =
     new GLTFLoader();
 
-
   loader.load(
-
     "./models/bitch.glb",
 
-
-    function (gltf) {
-
+    function(gltf) {
       console.log(
         "BTCH 3D logo loaded successfully."
       );
 
+      /*
+        Ignore GLB animation.
+        We control the spin ourselves.
+      */
 
-      logo =
+      if (
+        gltf.animations &&
+        gltf.animations.length
+      ) {
+        console.log(
+          "Ignoring GLB animations:",
+          gltf.animations.length
+        );
+      }
+
+      const originalModel =
         gltf.scene;
 
+      originalModel.updateMatrixWorld(
+        true
+      );
 
-      /* =========================
-         MAKE EVERY MESH VISIBLE
-      ========================= */
+      /*
+        Create clean model.
+      */
 
-      logo.traverse(
+      const cleanModel =
+        new THREE.Group();
+
+      const meshes = [];
+
+      originalModel.traverse(
         child => {
-
           if (!child.isMesh) {
             return;
           }
 
+          if (!child.geometry) {
+            return;
+          }
 
-          child.visible =
-            true;
-
-
-          child.frustumCulled =
-            false;
-
-
-          /*
-             Give the logo a guaranteed
-             visible material.
-
-             We intentionally use a
-             bright metallic material
-             here so the model cannot
-             disappear because of a
-             dark/unsupported GLB
-             material.
-          */
-
-          child.material =
-            new THREE.MeshStandardMaterial({
-
-              color: 0xffffff,
-
-              metalness: 0.75,
-
-              roughness: 0.22
-
-            });
-
-
-          child.castShadow =
-            false;
-
-
-          child.receiveShadow =
-            false;
-
+          meshes.push(
+            child
+          );
         }
       );
 
+      if (!meshes.length) {
+        console.error(
+          "BTCH GLB contains no usable meshes."
+        );
 
-      scene.add(
-        logo
-      );
+        return;
+      }
 
+      /*
+        Bake original transforms
+        into each mesh.
+      */
 
-      /* =========================
-         CENTER ORIGINAL MODEL
-      ========================= */
+      meshes.forEach(
+        originalMesh => {
+          const geometry =
+            originalMesh.geometry.clone();
 
-      const originalBox =
-        new THREE.Box3()
-          .setFromObject(
-            logo
+          geometry.applyMatrix4(
+            originalMesh.matrixWorld
           );
 
+          geometry.computeBoundingBox();
+          geometry.computeBoundingSphere();
 
-      const originalCenter =
-        originalBox.getCenter(
-          new THREE.Vector3()
-        );
+          const material =
+            new THREE.MeshStandardMaterial({
+              color: 0xffffff,
+              metalness: 0.75,
+              roughness: 0.22
+            });
 
+          const mesh =
+            new THREE.Mesh(
+              geometry,
+              material
+            );
 
-      logo.position.sub(
-        originalCenter
+          mesh.position.set(
+            0,
+            0,
+            0
+          );
+
+          mesh.rotation.set(
+            0,
+            0,
+            0
+          );
+
+          mesh.scale.set(
+            1,
+            1,
+            1
+          );
+
+          mesh.visible =
+            true;
+
+          mesh.frustumCulled =
+            false;
+
+          mesh.castShadow =
+            false;
+
+          mesh.receiveShadow =
+            false;
+
+          cleanModel.add(
+            mesh
+          );
+        }
       );
 
+      /* =================================================
+         CENTER MODEL
+      ================================================= */
 
-      /* =========================
-         SCALE MODEL
-      ========================= */
+      cleanModel.updateMatrixWorld(
+        true
+      );
 
-      const originalSize =
-        originalBox.getSize(
+      const box =
+        new THREE.Box3()
+          .setFromObject(
+            cleanModel,
+            true
+          );
+
+      const size =
+        box.getSize(
           new THREE.Vector3()
         );
 
+      const center =
+        box.getCenter(
+          new THREE.Vector3()
+        );
 
       const maxDimension =
         Math.max(
-          originalSize.x,
-          originalSize.y,
-          originalSize.z
+          size.x,
+          size.y,
+          size.z
         );
 
+      console.log(
+        "BTCH CLEAN LOGO SIZE:",
+        size
+      );
+
+      console.log(
+        "BTCH CLEAN LOGO CENTER:",
+        center
+      );
+
+      console.log(
+        "BTCH CLEAN LOGO MAX:",
+        maxDimension
+      );
 
       if (
         !maxDimension ||
@@ -1561,128 +1425,95 @@ function setup3DLogo() {
           maxDimension
         )
       ) {
-
         console.error(
-          "BTCH 3D logo has invalid dimensions."
+          "BTCH clean logo has invalid dimensions."
         );
 
         return;
-
       }
 
+      /*
+        SMALL LOGO SIZE.
+      */
 
       const targetSize =
-        3.0;
-
+        3.2;
 
       const scale =
         targetSize /
         maxDimension;
 
-
-      logo.scale.set(
-        scale,
-        scale,
+      cleanModel.scale.setScalar(
         scale
       );
 
+      /*
+        Center after scaling.
+        This prevents sliding/orbiting.
+      */
 
-      /* =========================
-         CENTER AGAIN AFTER SCALE
-      ========================= */
-
-      const finalBox =
-        new THREE.Box3()
-          .setFromObject(
-            logo
-          );
-
-
-      const finalCenter =
-        finalBox.getCenter(
-          new THREE.Vector3()
-        );
-
-
-      logo.position.sub(
-        finalCenter
+      cleanModel.position.set(
+        -center.x * scale,
+        -center.y * scale,
+        -center.z * scale
       );
 
-
-      /* =========================
-         FIT CAMERA TO MODEL
-      ========================= */
-
-      const finalSize =
-        finalBox.getSize(
-          new THREE.Vector3()
-        );
-
-
-      const finalMaxDimension =
-        Math.max(
-          finalSize.x,
-          finalSize.y,
-          finalSize.z
-        );
-
-
-      const verticalFov =
-        THREE.MathUtils.degToRad(
-          camera.fov
-        );
-
-
-      const cameraDistance =
-        (
-          finalMaxDimension /
-          2
-        ) /
-        Math.tan(
-          verticalFov / 2
-        );
-
-
-      camera.position.set(
-        0,
-        0,
-        Math.max(
-          cameraDistance * 1.25,
-          4
-        )
+      cleanModel.updateMatrixWorld(
+        true
       );
 
+      /*
+        Add centered model
+        to fixed pivot.
+      */
 
-      camera.lookAt(
+      logoPivot.add(
+        cleanModel
+      );
+
+      logoPivot.position.set(
         0,
         0,
         0
       );
 
-
-      console.log(
-        "BTCH 3D logo is ready and spinning."
+      logoPivot.rotation.set(
+        0,
+        0,
+        0
       );
 
+      /*
+        ONLY THIS OBJECT ROTATES.
+      */
+
+      window.btch3DLogo =
+        logoPivot;
 
       console.log(
-        "BTCH 3D logo size:",
-        finalSize
+        "BTCH 3D logo is ready."
       );
-
 
       console.log(
-        "BTCH 3D camera distance:",
-        camera.position.z
+        "Position: FIXED"
       );
 
+      console.log(
+        "Rotation: Y AXIS ONLY"
+      );
+
+      console.log(
+        "Target size:",
+        targetSize
+      );
     },
 
+    /* =================================================
+       LOADING PROGRESS
+    ================================================= */
 
-    function (progress) {
-
+    function(progress) {
       if (progress.total) {
-
         console.log(
           "Loading BTCH 3D logo:",
           Math.round(
@@ -1692,100 +1523,85 @@ function setup3DLogo() {
             ) * 100
           ) + "%"
         );
-
       }
-
     },
 
+    /* =================================================
+       ERROR
+    ================================================= */
 
-    function (error) {
-
+    function(error) {
       console.error(
         "BTCH 3D logo failed to load:",
         error
       );
-
     }
-
   );
 
-
-  /* =========================
+  /* ===================================================
      ANIMATION
-  ========================= */
+
+     ONLY Y ROTATION.
+     NO SLIDE.
+     NO ORBIT.
+     NO BOUNCE.
+  =================================================== */
 
   function animate() {
-
     requestAnimationFrame(
       animate
     );
 
-
-    if (logo) {
-
-      logo.rotation.y +=
-        0.008;
-
+    if (
+      window.btch3DLogo
+    ) {
+      window.btch3DLogo.rotation.y +=
+        0.003;
     }
-
 
     renderer.render(
       scene,
       camera
     );
-
   }
-
 
   animate();
 
-
-  /* =========================
-     RESPONSIVE
-  ========================= */
+  /* ===================================================
+     RESIZE
+  =================================================== */
 
   function resize3DLogo() {
-
     const width =
       container.clientWidth;
 
     const height =
       container.clientHeight;
 
-
     if (
       !width ||
       !height
     ) {
-
       return;
-
     }
-
 
     camera.aspect =
       width /
       height;
 
-
     camera.updateProjectionMatrix();
-
 
     renderer.setSize(
       width,
       height
     );
-
   }
-
 
   window.addEventListener(
     "resize",
     resize3DLogo
   );
-
 }
-
 
 /* =====================================================
    START WEBSITE
@@ -1794,14 +1610,9 @@ function setup3DLogo() {
 document.addEventListener(
   "DOMContentLoaded",
   () => {
-
     setupNavigation();
-
     setupCart();
-
     loadShopifyProducts();
-
     setup3DLogo();
-
   }
 );
