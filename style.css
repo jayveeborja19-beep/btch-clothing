@@ -1081,13 +1081,160 @@ footer {
 @media (max-width: 480px) {
 
   #btch-3d-logo {
-    width: 230px;
-    height: 230px;
+    width: 210px;
+    height: 210px;
 
-    top: 72px;
+    top: 50px;
     left: 50%;
 
     transform: translateX(-50%);
   }
 
+}
+/* =========================================
+   BTCH PRODUCT GALLERY
+========================================= */
+
+.btch-product-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(0, 0, 0, 0.92);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.btch-product-window {
+  position: relative;
+  width: 100%;
+  max-width: 1050px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #101010;
+  color: white;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 35px;
+  padding: 45px;
+  border: 1px solid #333;
+}
+
+.btch-product-close {
+  position: absolute;
+  top: 10px;
+  right: 18px;
+  background: none;
+  color: white;
+  border: none;
+  font-size: 36px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.btch-product-main {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #050505;
+  overflow: hidden;
+}
+
+.btch-product-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.btch-product-thumbnails {
+  display: flex;
+  gap: 12px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.btch-product-thumb {
+  width: 85px;
+  height: 95px;
+  padding: 4px;
+  background: #171717;
+  border: 1px solid #444;
+  cursor: pointer;
+}
+
+.btch-product-thumb.selected {
+  border: 2px solid white;
+}
+
+.btch-product-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.btch-product-details {
+  align-self: center;
+}
+
+.btch-product-label {
+  color: #999;
+  font-size: 12px;
+  letter-spacing: 3px;
+}
+
+.btch-product-details h2 {
+  font-size: 32px;
+  margin: 15px 0;
+  text-transform: uppercase;
+}
+
+.btch-product-price {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.btch-product-description {
+  color: #aaa;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+.btch-detail-add {
+  width: 100%;
+  margin-top: 25px;
+  padding: 17px;
+  background: white;
+  color: black;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+.product-card {
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .btch-product-modal {
+    padding: 12px;
+  }
+
+  .btch-product-window {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 45px 18px 25px;
+    max-height: 94vh;
+  }
+
+  .btch-product-details h2 {
+    font-size: 24px;
+  }
+
+  .btch-product-thumb {
+    width: 70px;
+    height: 78px;
+  }
 }
