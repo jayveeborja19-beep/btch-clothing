@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,8 +55,7 @@
     href="style.css"
   >
 
-  <!-- ================= THREE.JS IMPORT MAP ================= -->
-
+  <!-- THREE.JS IMPORT MAP -->
   <script type="importmap">
   {
     "imports": {
@@ -69,13 +69,11 @@
 
 <body>
 
-
   <!-- ================= HEADER ================= -->
 
   <header>
 
     <!-- BTCH LOGO -->
-
     <a href="#" class="logo">
 
       <img
@@ -85,28 +83,18 @@
 
     </a>
 
-
     <!-- NAVIGATION -->
-
     <nav>
 
-      <a href="#products">
-        SHOP
-      </a>
+      <a href="#products">SHOP</a>
 
-      <a href="#about">
-        ABOUT
-      </a>
+      <a href="#about">ABOUT</a>
 
-      <a href="#contact">
-        CONTACT
-      </a>
+      <a href="#contact">CONTACT</a>
 
     </nav>
 
-
-    <!-- ================= CART ICON ================= -->
-
+    <!-- CART ICON -->
     <button
       class="cart-button"
       type="button"
@@ -144,12 +132,7 @@
 
       </svg>
 
-
-      <!-- NUMBER OF ITEMS -->
-
-      <span class="cart-count">
-        0
-      </span>
+      <span class="cart-count">0</span>
 
     </button>
 
@@ -160,12 +143,36 @@
 
   <section class="hero">
 
+    <!-- BTCH COMMERCIAL VIDEO -->
+
+    <video
+      class="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      poster="hero.jpg"
+    >
+
+      <source
+        src="hero-video.mp4"
+        type="video/mp4"
+      >
+
+      Your browser does not support HTML5 video.
+
+    </video>
+
+    <!-- DARK OVERLAY -->
+
     <div class="hero-overlay"></div>
 
-    <!-- ================= 3D BTCH LOGO ================= -->
+    <!-- 3D BTCH LOGO -->
 
     <div id="btch-3d-logo"></div>
 
+    <!-- HERO CONTENT -->
 
     <div class="hero-content">
 
@@ -208,11 +215,9 @@
 
     </div>
 
-
-    <!-- ================= PRODUCTS ================= -->
+    <!-- PRODUCTS -->
 
     <div class="products-grid">
-
 
       <!-- PRODUCT 1 -->
 
@@ -231,9 +236,7 @@
           BTCH BIC INSPIRED
         </h3>
 
-        <p>
-          ₱650
-        </p>
+        <p>₱650</p>
 
       </div>
 
@@ -262,9 +265,7 @@
           BTCH DICE
         </h3>
 
-        <p>
-          ₱650
-        </p>
+        <p>₱650</p>
 
       </div>
 
@@ -286,9 +287,7 @@
           BTCH BIC INSPIRED — WHITE
         </h3>
 
-        <p>
-          ₱650
-        </p>
+        <p>₱650</p>
 
       </div>
 
@@ -310,9 +309,7 @@
           BTCH PINK SIGN
         </h3>
 
-        <p>
-          ₱650
-        </p>
+        <p>₱650</p>
 
       </div>
 
@@ -334,9 +331,7 @@
           BTCH GIRLS AND MONEY
         </h3>
 
-        <p>
-          ₱650
-        </p>
+        <p>₱650</p>
 
       </div>
 
@@ -432,7 +427,6 @@
 
     </div>
 
-
     <div class="footer-links">
 
       <a
@@ -469,7 +463,6 @@
 
     </div>
 
-
     <p class="copyright">
       © 2026 BTCH CLOTHING. ALL RIGHTS RESERVED.
     </p>
@@ -485,7 +478,6 @@
   >
 
     <div class="cart-container">
-
 
       <!-- CART HEADER -->
 
@@ -505,7 +497,6 @@
 
       </div>
 
-
       <!-- CART ITEMS -->
 
       <div id="cart-items">
@@ -513,7 +504,6 @@
         <!-- Cart items appear here -->
 
       </div>
-
 
       <!-- CART FOOTER -->
 
@@ -530,7 +520,6 @@
           </strong>
 
         </div>
-
 
         <button
           id="checkout-button"
