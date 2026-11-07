@@ -1,7 +1,7 @@
 
 // =====================================================
 // BTCH CLOTHING - COMPLETE SCRIPT.JS
-// Shopify + Product Gallery + Cart + Checkout + 3D Logo
+// Shopify + Product Gallery + Size Selection + Cart + Checkout + 3D Logo
 // =====================================================
 
 import * as THREE from "https://esm.sh/three@0.180.0";
@@ -82,6 +82,10 @@ async function loadShopifyProducts() {
             nodes {
               id
               title
+              selectedOptions {
+                name
+                value
+              }
               availableForSale
               price {
                 amount
@@ -124,8 +128,8 @@ function renderProducts(items) {
   grid.innerHTML = "";
 
   items.forEach(product => {
-    const variant = product.variants?.nodes?.[0];
-    if (!variant) return;
+    const variants = product.variants?.nodes || [];
+    if (!variants.length) return;
 
     const images = product.images?.nodes?.length
       ? product.images.nodes
@@ -135,11 +139,11 @@ function renderProducts(items) {
 
     const image =
       product.featuredImage?.url ||
-      variant.image?.url ||
+      variants[0].image?.url ||
       images[0]?.url ||
       "";
 
-    const price = Number(variant.price.amount).toLocaleString("en-PH", {
+    const price = Number(variants[0].price.amount).toLocaleString("en-PH", {
       minimumFractionDigits: 0,
       maximumFractionDigits: 2
     });
@@ -158,21 +162,17 @@ function renderProducts(items) {
         <h3>${escapeHtml(product.title)}</h3>
         <p>₱${price}</p>
 
-        <button
-          class="add-to-cart"
-          type="button"
-          data-variant-id="${escapeHtml(variant.id)}"
-          data-product-title="${escapeHtml(product.title)}"
-          data-price="${escapeHtml(variant.price.amount)}"
-          data-image="${escapeHtml(image)}">
-          ADD TO CART
+        <button class="add-to-cart"
+                type="button">
+          SELECT SIZE
         </button>
       </div>
     `;
 
-    // CLICK PRODUCT TO OPEN GALLERY
     card.addEventListener("click", event => {
-      if (event.target.closest(".add-to-cart")) return;
+      if (event.target.closest(".add-to-cart")) {
+        event.stopPropagation();
+      }
       openProductDetails(product);
     });
 
@@ -186,20 +186,6 @@ function renderProducts(items) {
 
     grid.appendChild(card);
   });
-
-  document.querySelectorAll(".add-to-cart").forEach(button => {
-    button.addEventListener("click", event => {
-      event.stopPropagation();
-
-      addToCart({
-        variantId: button.dataset.variantId,
-        title: button.dataset.productTitle,
-        price: Number(button.dataset.price),
-        image: button.dataset.image,
-        quantity: 1
-      });
-    });
-  });
 }
 
 // =====================================================
@@ -207,8 +193,12 @@ function renderProducts(items) {
 // =====================================================
 
 function openProductDetails(product) {
-  const variant = product.variants?.nodes?.[0];
-  if (!variant) return;
+  const variants = product.variants?.nodes || [];
+
+  if (!variants.length) {
+    alert("No product variants found.");
+    return;
+  }
 
   const images = product.images?.nodes?.length
     ? product.images.nodes
@@ -221,10 +211,26 @@ function openProductDetails(product) {
     return;
   }
 
-  const price = Number(variant.price.amount).toLocaleString("en-PH", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2
-  });
+  const getVariantSize = variant => {
+    const sizeOption = variant.selectedOptions?.find(
+      option => option.name?.toLowerCase() === "size"
+    );
+    return sizeOption?.value || variant.title;
+  };
+
+  const sizeVariants = variants.map(variant => ({
+    ...variant,
+    sizeLabel: getVariantSize(variant)
+  }));
+
+  // Customer must choose a size first.
+  let selectedVariant = null;
+
+  const formatPrice = variant =>
+    Number(variant.price.amount).toLocaleString("en-PH", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    });
 
   let modal = document.getElementById("btch-product-modal");
 
@@ -235,7 +241,73 @@ function openProductDetails(product) {
     document.body.appendChild(modal);
   }
 
+  const sizeButtons = sizeVariants.map((variant, index) => `
+    <button
+      type="button"
+      class="btch-size-option"
+      data-variant-index="${index}"
+      ${variant.availableForSale ? "" : "disabled"}
+      aria-pressed="false">
+      ${escapeHtml(variant.sizeLabel)}
+      ${variant.availableForSale ? "" : '<span class="btch-sold-out">SOLD OUT</span>'}
+    </button>
+  `).join("");
+
   modal.innerHTML = `
+    <style>
+      #btch-product-modal .btch-size-picker {
+        margin: 18px 0;
+      }
+
+      #btch-product-modal .btch-size-heading {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 12px;
+        letter-spacing: 1.5px;
+        font-weight: 700;
+      }
+
+      #btch-product-modal .btch-size-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+      }
+
+      #btch-product-modal .btch-size-option {
+        min-width: 48px;
+        min-height: 44px;
+        padding: 9px 13px;
+        border: 1px solid #777;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+        font: inherit;
+      }
+
+      #btch-product-modal .btch-size-option.selected {
+        background: #fff;
+        color: #000;
+        border-color: #fff;
+      }
+
+      #btch-product-modal .btch-size-option:disabled {
+        opacity: .35;
+        cursor: not-allowed;
+        text-decoration: line-through;
+      }
+
+      #btch-product-modal .btch-sold-out {
+        display: block;
+        font-size: 8px;
+        margin-top: 3px;
+      }
+
+      #btch-product-modal .btch-detail-add:disabled {
+        opacity: .45;
+        cursor: not-allowed;
+      }
+    </style>
+
     <div class="btch-product-window">
 
       <button class="btch-product-close"
@@ -271,18 +343,26 @@ function openProductDetails(product) {
 
         <h2>${escapeHtml(product.title)}</h2>
 
-        <p class="btch-product-price">₱${price}</p>
+        <p class="btch-product-price">SELECT A SIZE</p>
 
         <p class="btch-product-description">
           ${escapeHtml(product.description || "")}
         </p>
 
-        <button type="button" class="btch-detail-add">
-          ADD TO CART
+        <div class="btch-size-picker">
+          <span class="btch-size-heading">SELECT SIZE</span>
+          <div class="btch-size-options">
+            ${sizeButtons}
+          </div>
+        </div>
+
+        <button type="button"
+                class="btch-detail-add"
+                disabled>
+          SELECT SIZE FIRST
         </button>
 
       </div>
-
     </div>
   `;
 
@@ -290,8 +370,11 @@ function openProductDetails(product) {
   document.body.style.overflow = "hidden";
 
   const mainImage = modal.querySelector("#btch-main-image");
+  const priceElement = modal.querySelector(".btch-product-price");
+  const addButton = modal.querySelector(".btch-detail-add");
 
   // SWITCH PRODUCT PHOTOS
+
   modal.querySelectorAll(".btch-product-thumb").forEach(button => {
     button.addEventListener("click", () => {
       const index = Number(button.dataset.imageIndex);
@@ -310,7 +393,33 @@ function openProductDetails(product) {
     });
   });
 
+  // SELECT SIZE
+
+  modal.querySelectorAll(".btch-size-option").forEach(button => {
+    button.addEventListener("click", () => {
+      const index = Number(button.dataset.variantIndex);
+      const variant = sizeVariants[index];
+
+      if (!variant || !variant.availableForSale) return;
+
+      selectedVariant = variant;
+
+      modal.querySelectorAll(".btch-size-option").forEach(optionButton => {
+        const isSelected = optionButton === button;
+
+        optionButton.classList.toggle("selected", isSelected);
+        optionButton.setAttribute("aria-pressed", String(isSelected));
+      });
+
+      priceElement.textContent = "₱" + formatPrice(selectedVariant);
+
+      addButton.disabled = false;
+      addButton.textContent = "ADD TO CART";
+    });
+  });
+
   // CLOSE PRODUCT WINDOW
+
   modal.querySelector(".btch-product-close").addEventListener(
     "click",
     closeProductDetails
@@ -322,15 +431,24 @@ function openProductDetails(product) {
     }
   };
 
-  // ADD TO CART FROM PRODUCT PAGE
-  modal.querySelector(".btch-detail-add").addEventListener("click", () => {
+  // ADD SELECTED SIZE TO CART
+
+  addButton.addEventListener("click", () => {
+    if (!selectedVariant || !selectedVariant.availableForSale) {
+      alert("Please select an available size.");
+      return;
+    }
+
     addToCart({
-      variantId: variant.id,
+      variantId: selectedVariant.id,
       title: product.title,
-      price: Number(variant.price.amount),
-      image: images[0].url,
+      size: selectedVariant.sizeLabel,
+      price: Number(selectedVariant.price.amount),
+      image: selectedVariant.image?.url || images[0].url,
       quantity: 1
     });
+
+    closeProductDetails();
   });
 }
 
@@ -474,6 +592,8 @@ function renderCart() {
       <div class="cart-item-info">
 
         <h4>${escapeHtml(item.title)}</h4>
+
+        ${item.size ? `<p class="cart-item-size">SIZE: ${escapeHtml(item.size)}</p>` : ""}
 
         <p>₱${item.price.toLocaleString("en-PH")}</p>
 
